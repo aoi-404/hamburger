@@ -87,7 +87,18 @@ for i, name in ipairs(tabNames) do
     tabBtn.TextColor3 = Color3.fromRGB(40, 40, 40)
     tabBtn.BorderSizePixel = 0
     tabBtn.Parent = sidebar
+    tabBtn.ZIndex = 10 -- Ensure tab buttons are always on top
     tabButtons[name] = tabBtn
+end
+
+-- Set ZIndex for content frames and their children lower than tab buttons
+for _, frame in pairs(tabContent) do
+    frame.ZIndex = 5
+    for _, child in ipairs(frame:GetChildren()) do
+        if child:IsA("GuiObject") then
+            child.ZIndex = 5
+        end
+    end
 end
 
 -- Vertical Black Line
