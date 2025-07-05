@@ -510,6 +510,164 @@ end
 updateSeedDropdownText()
 seedDropdownList.CanvasSize = UDim2.new(0, 0, 0, #seedOptions * 38)
 
+-- FARM TAB CONTENT
+local farmFrame = tabContent["FARM"]
+
+-- Auto Plant Toggle
+local autoPlantToggle = Instance.new("TextButton")
+autoPlantToggle.Name = "AutoPlantToggle"
+autoPlantToggle.Size = UDim2.new(1, -32, 0, 36)
+autoPlantToggle.Position = UDim2.new(0, 16, 0, 20)
+autoPlantToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
+autoPlantToggle.Text = "AUTO PLANT"
+autoPlantToggle.Font = Enum.Font.SourceSansBold
+autoPlantToggle.TextSize = 20
+autoPlantToggle.TextColor3 = Color3.fromRGB(255,255,255)
+autoPlantToggle.BorderSizePixel = 0
+autoPlantToggle.TextXAlignment = Enum.TextXAlignment.Left
+autoPlantToggle.Parent = farmFrame
+
+local plantCheck = Instance.new("TextLabel")
+plantCheck.Name = "Checkmark"
+plantCheck.Size = UDim2.new(0, 32, 1, 0)
+plantCheck.Position = UDim2.new(1, -36, 0, 0)
+plantCheck.BackgroundTransparency = 1
+plantCheck.Font = Enum.Font.SourceSansBold
+plantCheck.TextSize = 24
+plantCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
+plantCheck.Text = ""
+plantCheck.Parent = autoPlantToggle
+
+local autoPlantState = false
+local function updateAutoPlantToggle()
+    autoPlantToggle.BackgroundColor3 = autoPlantState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
+    plantCheck.Text = autoPlantState and "✔" or ""
+end
+updateAutoPlantToggle()
+autoPlantToggle.MouseButton1Click:Connect(function()
+    autoPlantState = not autoPlantState
+    updateAutoPlantToggle()
+end)
+
+-- Auto Harvest Toggle
+local autoHarvestToggle = Instance.new("TextButton")
+autoHarvestToggle.Name = "AutoHarvestToggle"
+autoHarvestToggle.Size = UDim2.new(1, -32, 0, 36)
+autoHarvestToggle.Position = UDim2.new(0, 16, 0, 66)
+autoHarvestToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
+autoHarvestToggle.Text = "AUTO HARVEST"
+autoHarvestToggle.Font = Enum.Font.SourceSansBold
+autoHarvestToggle.TextSize = 20
+autoHarvestToggle.TextColor3 = Color3.fromRGB(255,255,255)
+autoHarvestToggle.BorderSizePixel = 0
+autoHarvestToggle.TextXAlignment = Enum.TextXAlignment.Left
+autoHarvestToggle.Parent = farmFrame
+
+local harvestCheck = Instance.new("TextLabel")
+harvestCheck.Name = "Checkmark"
+harvestCheck.Size = UDim2.new(0, 32, 1, 0)
+harvestCheck.Position = UDim2.new(1, -36, 0, 0)
+harvestCheck.BackgroundTransparency = 1
+harvestCheck.Font = Enum.Font.SourceSansBold
+harvestCheck.TextSize = 24
+harvestCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
+harvestCheck.Text = ""
+harvestCheck.Parent = autoHarvestToggle
+
+local autoHarvestState = false
+local function updateAutoHarvestToggle()
+    autoHarvestToggle.BackgroundColor3 = autoHarvestState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
+    harvestCheck.Text = autoHarvestState and "✔" or ""
+end
+updateAutoHarvestToggle()
+autoHarvestToggle.MouseButton1Click:Connect(function()
+    autoHarvestState = not autoHarvestState
+    updateAutoHarvestToggle()
+end)
+
+-- Auto Sell Inventory Toggle
+local autoSellToggle = Instance.new("TextButton")
+autoSellToggle.Name = "AutoSellToggle"
+autoSellToggle.Size = UDim2.new(1, -32, 0, 36)
+autoSellToggle.Position = UDim2.new(0, 16, 0, 112)
+autoSellToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
+autoSellToggle.Text = "AUTO SELL INVENTORY"
+autoSellToggle.Font = Enum.Font.SourceSansBold
+autoSellToggle.TextSize = 20
+autoSellToggle.TextColor3 = Color3.fromRGB(255,255,255)
+autoSellToggle.BorderSizePixel = 0
+autoSellToggle.TextXAlignment = Enum.TextXAlignment.Left
+autoSellToggle.Parent = farmFrame
+
+local sellCheck = Instance.new("TextLabel")
+sellCheck.Name = "Checkmark"
+sellCheck.Size = UDim2.new(0, 32, 1, 0)
+sellCheck.Position = UDim2.new(1, -36, 0, 0)
+sellCheck.BackgroundTransparency = 1
+sellCheck.Font = Enum.Font.SourceSansBold
+sellCheck.TextSize = 24
+sellCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
+sellCheck.Text = ""
+sellCheck.Parent = autoSellToggle
+
+local autoSellState = false
+local function updateAutoSellToggle()
+    autoSellToggle.BackgroundColor3 = autoSellState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
+    sellCheck.Text = autoSellState and "✔" or ""
+end
+updateAutoSellToggle()
+autoSellToggle.MouseButton1Click:Connect(function()
+    autoSellState = not autoSellState
+    updateAutoSellToggle()
+end)
+
+-- Automation Remotes for FARM
+local plantRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("Plant_RE")
+local harvestRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("HarvestRemote")
+local sellRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("Sell_Inventory")
+
+-- Auto Plant Loop
+local autoPlantLoopRunning = false
+if not autoPlantLoopRunning then
+    autoPlantLoopRunning = true
+    task.spawn(function()
+        while true do
+            if autoPlantState and plantRemote then
+                plantRemote:FireServer()
+            end
+            task.wait(0.2)
+        end
+    end)
+end
+
+-- Auto Harvest Loop
+local autoHarvestLoopRunning = false
+if not autoHarvestLoopRunning then
+    autoHarvestLoopRunning = true
+    task.spawn(function()
+        while true do
+            if autoHarvestState and harvestRemote then
+                harvestRemote:FireServer()
+            end
+            task.wait(0.2)
+        end
+    end)
+end
+
+-- Auto Sell Inventory Loop
+local autoSellLoopRunning = false
+if not autoSellLoopRunning then
+    autoSellLoopRunning = true
+    task.spawn(function()
+        while true do
+            if autoSellState and sellRemote then
+                sellRemote:FireServer()
+            end
+            task.wait(1)
+        end
+    end)
+end
+
 -- Helper to update toggle positions based on dropdowns
 function updateShopTogglePositions()
     local y = 20
