@@ -1,11 +1,3 @@
---[[
-    GAG SCRIPT BY:BREAD - Grow a Garden Automation Script
-    Compatible with Delta Executor. No external dependencies.
-    Features: Modular GUI, category panels, auto farm/shop/events/pets/utility/special, safe remote calls, clean-up.
-    Author: GitHub Copilot
-]]
-
---// Services
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
