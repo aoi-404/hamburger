@@ -716,562 +716,61 @@ UserInputService.InputBegan:Connect(function(input, processed)
     end
 end)
 
--- Add FARM tab toggles and logic
-local farmFrame = tabContent["FARM"]
+-- Automation Remotes
+local buyEggRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyPetEgg")
+local buySeedRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuySeedStock")
 
--- Auto Plant Toggle
-local autoPlantToggle = Instance.new("TextButton")
-autoPlantToggle.Name = "AutoPlantToggle"
-autoPlantToggle.Size = UDim2.new(1, -32, 0, 36)
-autoPlantToggle.Position = UDim2.new(0, 16, 0, 16)
-autoPlantToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoPlantToggle.Text = "AUTO PLANT"
-autoPlantToggle.Font = Enum.Font.SourceSansBold
-autoPlantToggle.TextSize = 20
-autoPlantToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoPlantToggle.BorderSizePixel = 0
-autoPlantToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoPlantToggle.Parent = farmFrame
-
-local autoPlantCheck = Instance.new("TextLabel")
-autoPlantCheck.Name = "Checkmark"
-autoPlantCheck.Size = UDim2.new(0, 32, 1, 0)
-autoPlantCheck.Position = UDim2.new(1, -36, 0, 0)
-autoPlantCheck.BackgroundTransparency = 1
-autoPlantCheck.Font = Enum.Font.SourceSansBold
-autoPlantCheck.TextSize = 24
-autoPlantCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-autoPlantCheck.Text = ""
-autoPlantCheck.Parent = autoPlantToggle
-
-local autoPlantState = false
-local function updateAutoPlantToggle()
-    autoPlantToggle.BackgroundColor3 = autoPlantState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    autoPlantCheck.Text = autoPlantState and "✔" or ""
+-- Helper: Check if an egg/seed is in stock (stub, should be replaced with real stock check if available)
+local function isEggInStock(eggName)
+    -- TODO: Replace with real stock check if possible
+    return true -- Assume always in stock for now
 end
-updateAutoPlantToggle()
-autoPlantToggle.MouseButton1Click:Connect(function()
-    autoPlantState = not autoPlantState
-    updateAutoPlantToggle()
-end)
-
--- Auto Harvest Toggle
-local autoHarvestToggle = Instance.new("TextButton")
-autoHarvestToggle.Name = "AutoHarvestToggle"
-autoHarvestToggle.Size = UDim2.new(1, -32, 0, 36)
-autoHarvestToggle.Position = UDim2.new(0, 16, 0, 64)
-autoHarvestToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoHarvestToggle.Text = "AUTO HARVEST"
-autoHarvestToggle.Font = Enum.Font.SourceSansBold
-autoHarvestToggle.TextSize = 20
-autoHarvestToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoHarvestToggle.BorderSizePixel = 0
-autoHarvestToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoHarvestToggle.Parent = farmFrame
-
-local autoHarvestCheck = Instance.new("TextLabel")
-autoHarvestCheck.Name = "Checkmark"
-autoHarvestCheck.Size = UDim2.new(0, 32, 1, 0)
-autoHarvestCheck.Position = UDim2.new(1, -36, 0, 0)
-autoHarvestCheck.BackgroundTransparency = 1
-autoHarvestCheck.Font = Enum.Font.SourceSansBold
-autoHarvestCheck.TextSize = 24
-autoHarvestCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-autoHarvestCheck.Text = ""
-autoHarvestCheck.Parent = autoHarvestToggle
-
-local autoHarvestState = false
-local function updateAutoHarvestToggle()
-    autoHarvestToggle.BackgroundColor3 = autoHarvestState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    autoHarvestCheck.Text = autoHarvestState and "✔" or ""
+local function isSeedInStock(seedName)
+    -- TODO: Replace with real stock check if possible
+    return true -- Assume always in stock for now
 end
-updateAutoHarvestToggle()
-autoHarvestToggle.MouseButton1Click:Connect(function()
-    autoHarvestState = not autoHarvestState
-    updateAutoHarvestToggle()
-end)
 
--- Auto Sell Inventory Toggle
-local autoSellToggle = Instance.new("TextButton")
-autoSellToggle.Name = "AutoSellToggle"
-autoSellToggle.Size = UDim2.new(1, -32, 0, 36)
-autoSellToggle.Position = UDim2.new(0, 16, 0, 112)
-autoSellToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoSellToggle.Text = "AUTO SELL INVENTORY"
-autoSellToggle.Font = Enum.Font.SourceSansBold
-autoSellToggle.TextSize = 20
-autoSellToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoSellToggle.BorderSizePixel = 0
-autoSellToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoSellToggle.Parent = farmFrame
+-- Auto-buy logic
+local autoBuyEggLoopRunning = false
+local autoBuySeedLoopRunning = false
 
-local autoSellCheck = Instance.new("TextLabel")
-autoSellCheck.Name = "Checkmark"
-autoSellCheck.Size = UDim2.new(0, 32, 1, 0)
-autoSellCheck.Position = UDim2.new(1, -36, 0, 0)
-autoSellCheck.BackgroundTransparency = 1
-autoSellCheck.Font = Enum.Font.SourceSansBold
-autoSellCheck.TextSize = 24
-autoSellCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-autoSellCheck.Text = ""
-autoSellCheck.Parent = autoSellToggle
-
-local autoSellState = false
-local function updateAutoSellToggle()
-    autoSellToggle.BackgroundColor3 = autoSellState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    autoSellCheck.Text = autoSellState and "✔" or ""
-end
-updateAutoSellToggle()
-autoSellToggle.MouseButton1Click:Connect(function()
-    autoSellState = not autoSellState
-    updateAutoSellToggle()
-end)
-
--- SHOP tab: add Auto Buy Gear and Auto Buy Cosmetic toggles
-local autoBuyGearToggle = Instance.new("TextButton")
-autoBuyGearToggle.Name = "AutoBuyGearToggle"
-autoBuyGearToggle.Size = UDim2.new(1, -32, 0, 36)
-autoBuyGearToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoBuyGearToggle.Text = "AUTO BUY GEAR"
-autoBuyGearToggle.Font = Enum.Font.SourceSansBold
-autoBuyGearToggle.TextSize = 20
-autoBuyGearToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoBuyGearToggle.BorderSizePixel = 0
-autoBuyGearToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoBuyGearToggle.Parent = shopFrame
-
-local gearCheck = Instance.new("TextLabel")
-gearCheck.Name = "Checkmark"
-gearCheck.Size = UDim2.new(0, 32, 1, 0)
-gearCheck.Position = UDim2.new(1, -36, 0, 0)
-gearCheck.BackgroundTransparency = 1
-gearCheck.Font = Enum.Font.SourceSansBold
-gearCheck.TextSize = 24
-gearCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-gearCheck.Text = ""
-gearCheck.Parent = autoBuyGearToggle
-
-local autoBuyGearState = false
-local function updateAutoBuyGearToggle()
-    autoBuyGearToggle.BackgroundColor3 = autoBuyGearState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    gearCheck.Text = autoBuyGearState and "✔" or ""
-end
-updateAutoBuyGearToggle()
-autoBuyGearToggle.MouseButton1Click:Connect(function()
-    autoBuyGearState = not autoBuyGearState
-    updateAutoBuyGearToggle()
-end)
-
-local autoBuyCosmeticToggle = Instance.new("TextButton")
-autoBuyCosmeticToggle.Name = "AutoBuyCosmeticToggle"
-autoBuyCosmeticToggle.Size = UDim2.new(1, -32, 0, 36)
-autoBuyCosmeticToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoBuyCosmeticToggle.Text = "AUTO BUY COSMETIC"
-autoBuyCosmeticToggle.Font = Enum.Font.SourceSansBold
-autoBuyCosmeticToggle.TextSize = 20
-autoBuyCosmeticToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoBuyCosmeticToggle.BorderSizePixel = 0
-autoBuyCosmeticToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoBuyCosmeticToggle.Parent = shopFrame
-
-local cosmeticCheck = Instance.new("TextLabel")
-cosmeticCheck.Name = "Checkmark"
-cosmeticCheck.Size = UDim2.new(0, 32, 1, 0)
-cosmeticCheck.Position = UDim2.new(1, -36, 0, 0)
-cosmeticCheck.BackgroundTransparency = 1
-cosmeticCheck.Font = Enum.Font.SourceSansBold
-cosmeticCheck.TextSize = 24
-cosmeticCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-cosmeticCheck.Text = ""
-cosmeticCheck.Parent = autoBuyCosmeticToggle
-
-local autoBuyCosmeticState = false
-local function updateAutoBuyCosmeticToggle()
-    autoBuyCosmeticToggle.BackgroundColor3 = autoBuyCosmeticState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    cosmeticCheck.Text = autoBuyCosmeticState and "✔" or ""
-end
-updateAutoBuyCosmeticToggle()
-autoBuyCosmeticToggle.MouseButton1Click:Connect(function()
-    autoBuyCosmeticState = not autoBuyCosmeticState
-    updateAutoBuyCosmeticToggle()
-end)
-
--- EVENT tab: add Auto Buy Summer Shop, Auto Submit, Auto Claim Summer Plants
-local eventAutoBuySummerToggle = Instance.new("TextButton")
-eventAutoBuySummerToggle.Name = "AutoBuySummerToggle"
-eventAutoBuySummerToggle.Size = UDim2.new(1, -32, 0, 36)
-eventAutoBuySummerToggle.Position = UDim2.new(0, 16, 0, 112)
-eventAutoBuySummerToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-eventAutoBuySummerToggle.Text = "AUTO BUY SUMMER SHOP"
-eventAutoBuySummerToggle.Font = Enum.Font.SourceSansBold
-eventAutoBuySummerToggle.TextSize = 20
-eventAutoBuySummerToggle.TextColor3 = Color3.fromRGB(255,255,255)
-eventAutoBuySummerToggle.BorderSizePixel = 0
-eventAutoBuySummerToggle.TextXAlignment = Enum.TextXAlignment.Left
-eventAutoBuySummerToggle.Parent = eventFrame
-
-local summerCheck = Instance.new("TextLabel")
-summerCheck.Name = "Checkmark"
-summerCheck.Size = UDim2.new(0, 32, 1, 0)
-summerCheck.Position = UDim2.new(1, -36, 0, 0)
-summerCheck.BackgroundTransparency = 1
-summerCheck.Font = Enum.Font.SourceSansBold
-summerCheck.TextSize = 24
-summerCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-summerCheck.Text = ""
-summerCheck.Parent = eventAutoBuySummerToggle
-
-local eventAutoBuySummerState = false
-local function updateEventAutoBuySummerToggle()
-    eventAutoBuySummerToggle.BackgroundColor3 = eventAutoBuySummerState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    summerCheck.Text = eventAutoBuySummerState and "✔" or ""
-end
-updateEventAutoBuySummerToggle()
-eventAutoBuySummerToggle.MouseButton1Click:Connect(function()
-    eventAutoBuySummerState = not eventAutoBuySummerState
-    updateEventAutoBuySummerToggle()
-end)
-
-local eventAutoSubmitToggle = Instance.new("TextButton")
-eventAutoSubmitToggle.Name = "EventAutoSubmitToggle"
-eventAutoSubmitToggle.Size = UDim2.new(1, -32, 0, 36)
-eventAutoSubmitToggle.Position = UDim2.new(0, 16, 0, 160)
-eventAutoSubmitToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-eventAutoSubmitToggle.Text = "AUTO SUBMIT (SUMMER HARVEST)"
-eventAutoSubmitToggle.Font = Enum.Font.SourceSansBold
-eventAutoSubmitToggle.TextSize = 20
-eventAutoSubmitToggle.TextColor3 = Color3.fromRGB(255,255,255)
-eventAutoSubmitToggle.BorderSizePixel = 0
-eventAutoSubmitToggle.TextXAlignment = Enum.TextXAlignment.Left
-eventAutoSubmitToggle.Parent = eventFrame
-
-local submitCheck = Instance.new("TextLabel")
-submitCheck.Name = "Checkmark"
-submitCheck.Size = UDim2.new(0, 32, 1, 0)
-submitCheck.Position = UDim2.new(1, -36, 0, 0)
-submitCheck.BackgroundTransparency = 1
-submitCheck.Font = Enum.Font.SourceSansBold
-submitCheck.TextSize = 24
-submitCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-submitCheck.Text = ""
-submitCheck.Parent = eventAutoSubmitToggle
-
-local eventAutoSubmitState = false
-local function updateEventAutoSubmitToggle()
-    eventAutoSubmitToggle.BackgroundColor3 = eventAutoSubmitState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    submitCheck.Text = eventAutoSubmitState and "✔" or ""
-end
-updateEventAutoSubmitToggle()
-eventAutoSubmitToggle.MouseButton1Click:Connect(function()
-    eventAutoSubmitState = not eventAutoSubmitState
-    updateEventAutoSubmitToggle()
-end)
-
-local eventAutoClaimSummerToggle = Instance.new("TextButton")
-eventAutoClaimSummerToggle.Name = "EventAutoClaimSummerToggle"
-eventAutoClaimSummerToggle.Size = UDim2.new(1, -32, 0, 36)
-eventAutoClaimSummerToggle.Position = UDim2.new(0, 16, 0, 208)
-eventAutoClaimSummerToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-eventAutoClaimSummerToggle.Text = "AUTO CLAIM SUMMER PLANTS"
-eventAutoClaimSummerToggle.Font = Enum.Font.SourceSansBold
-eventAutoClaimSummerToggle.TextSize = 20
-eventAutoClaimSummerToggle.TextColor3 = Color3.fromRGB(255,255,255)
-eventAutoClaimSummerToggle.BorderSizePixel = 0
-eventAutoClaimSummerToggle.TextXAlignment = Enum.TextXAlignment.Left
-eventAutoClaimSummerToggle.Parent = eventFrame
-
-local claimCheck = Instance.new("TextLabel")
-claimCheck.Name = "Checkmark"
-claimCheck.Size = UDim2.new(0, 32, 1, 0)
-claimCheck.Position = UDim2.new(1, -36, 0, 0)
-claimCheck.BackgroundTransparency = 1
-claimCheck.Font = Enum.Font.SourceSansBold
-claimCheck.TextSize = 24
-claimCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-claimCheck.Text = ""
-claimCheck.Parent = eventAutoClaimSummerToggle
-
-local eventAutoClaimSummerState = false
-local function updateEventAutoClaimSummerToggle()
-    eventAutoClaimSummerToggle.BackgroundColor3 = eventAutoClaimSummerState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    claimCheck.Text = eventAutoClaimSummerState and "✔" or ""
-end
-updateEventAutoClaimSummerToggle()
-eventAutoClaimSummerToggle.MouseButton1Click:Connect(function()
-    eventAutoClaimSummerState = not eventAutoClaimSummerState
-    updateEventAutoClaimSummerToggle()
-end)
-
--- Traveling Merchant Section
-local merchantFrame = Instance.new("Frame")
-merchantFrame.Name = "MerchantFrame"
-merchantFrame.Size = UDim2.new(1, 0, 0, 60)
-merchantFrame.Position = UDim2.new(0, 0, 1, -60)
-merchantFrame.BackgroundTransparency = 1
-merchantFrame.Parent = sidebar
-
-local autoBuyMerchantToggle = Instance.new("TextButton")
-autoBuyMerchantToggle.Name = "AutoBuyMerchantToggle"
-autoBuyMerchantToggle.Size = UDim2.new(1, -32, 0, 36)
-autoBuyMerchantToggle.Position = UDim2.new(0, 16, 0, 12)
-autoBuyMerchantToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoBuyMerchantToggle.Text = "AUTO BUY TRAVELING MERCHANT STOCK"
-autoBuyMerchantToggle.Font = Enum.Font.SourceSansBold
-autoBuyMerchantToggle.TextSize = 20
-autoBuyMerchantToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoBuyMerchantToggle.BorderSizePixel = 0
-autoBuyMerchantToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoBuyMerchantToggle.Parent = merchantFrame
-
-local merchantCheck = Instance.new("TextLabel")
-merchantCheck.Name = "Checkmark"
-merchantCheck.Size = UDim2.new(0, 32, 1, 0)
-merchantCheck.Position = UDim2.new(1, -36, 0, 0)
-merchantCheck.BackgroundTransparency = 1
-merchantCheck.Font = Enum.Font.SourceSansBold
-merchantCheck.TextSize = 24
-merchantCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-merchantCheck.Text = ""
-merchantCheck.Parent = autoBuyMerchantToggle
-
-local autoBuyMerchantState = false
-local function updateAutoBuyMerchantToggle()
-    autoBuyMerchantToggle.BackgroundColor3 = autoBuyMerchantState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    merchantCheck.Text = autoBuyMerchantState and "✔" or ""
-end
-updateAutoBuyMerchantToggle()
-autoBuyMerchantToggle.MouseButton1Click:Connect(function()
-    autoBuyMerchantState = not autoBuyMerchantState
-    updateAutoBuyMerchantToggle()
-end)
-
--- Pet Section
-local petFrame = Instance.new("Frame")
-petFrame.Name = "PetFrame"
-petFrame.Size = UDim2.new(1, 0, 0, 80)
-petFrame.Position = UDim2.new(0, 0, 1, -140)
-petFrame.BackgroundTransparency = 1
-petFrame.Parent = sidebar
-
-local autoHatchEggToggle = Instance.new("TextButton")
-autoHatchEggToggle.Name = "AutoHatchEggToggle"
-autoHatchEggToggle.Size = UDim2.new(1, -32, 0, 36)
-autoHatchEggToggle.Position = UDim2.new(0, 16, 0, 12)
-autoHatchEggToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoHatchEggToggle.Text = "AUTO HATCH PET EGG"
-autoHatchEggToggle.Font = Enum.Font.SourceSansBold
-autoHatchEggToggle.TextSize = 20
-autoHatchEggToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoHatchEggToggle.BorderSizePixel = 0
-autoHatchEggToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoHatchEggToggle.Parent = petFrame
-
-local hatchCheck = Instance.new("TextLabel")
-hatchCheck.Name = "Checkmark"
-hatchCheck.Size = UDim2.new(0, 32, 1, 0)
-hatchCheck.Position = UDim2.new(1, -36, 0, 0)
-hatchCheck.BackgroundTransparency = 1
-hatchCheck.Font = Enum.Font.SourceSansBold
-hatchCheck.TextSize = 24
-hatchCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-hatchCheck.Text = ""
-hatchCheck.Parent = autoHatchEggToggle
-
-local autoHatchEggState = false
-local function updateAutoHatchEggToggle()
-    autoHatchEggToggle.BackgroundColor3 = autoHatchEggState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    hatchCheck.Text = autoHatchEggState and "✔" or ""
-end
-updateAutoHatchEggToggle()
-autoHatchEggToggle.MouseButton1Click:Connect(function()
-    autoHatchEggState = not autoHatchEggState
-    updateAutoHatchEggToggle()
-end)
-
-local autoPlaceEggToggle = Instance.new("TextButton")
-autoPlaceEggToggle.Name = "AutoPlaceEggToggle"
-autoPlaceEggToggle.Size = UDim2.new(1, -32, 0, 36)
-autoPlaceEggToggle.Position = UDim2.new(0, 16, 0, 52)
-autoPlaceEggToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoPlaceEggToggle.Text = "AUTO PLACE EGG"
-autoPlaceEggToggle.Font = Enum.Font.SourceSansBold
-autoPlaceEggToggle.TextSize = 20
-autoPlaceEggToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoPlaceEggToggle.BorderSizePixel = 0
-autoPlaceEggToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoPlaceEggToggle.Parent = petFrame
-
-local placeCheck = Instance.new("TextLabel")
-placeCheck.Name = "Checkmark"
-placeCheck.Size = UDim2.new(0, 32, 1, 0)
-placeCheck.Position = UDim2.new(1, -36, 0, 0)
-placeCheck.BackgroundTransparency = 1
-placeCheck.Font = Enum.Font.SourceSansBold
-placeCheck.TextSize = 24
-placeCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-placeCheck.Text = ""
-placeCheck.Parent = autoPlaceEggToggle
-
-local autoPlaceEggState = false
-local function updateAutoPlaceEggToggle()
-    autoPlaceEggToggle.BackgroundColor3 = autoPlaceEggState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    placeCheck.Text = autoPlaceEggState and "✔" or ""
-end
-updateAutoPlaceEggToggle()
-autoPlaceEggToggle.MouseButton1Click:Connect(function()
-    autoPlaceEggState = not autoPlaceEggState
-    updateAutoPlaceEggToggle()
-end)
-
--- Utility Section
-local utilityFrame = Instance.new("Frame")
-utilityFrame.Name = "UtilityFrame"
-utilityFrame.Size = UDim2.new(1, 0, 0, 80)
-utilityFrame.Position = UDim2.new(0, 0, 1, -220)
-utilityFrame.BackgroundTransparency = 1
-utilityFrame.Parent = sidebar
-
-local antiAfkToggle = Instance.new("TextButton")
-antiAfkToggle.Name = "AntiAfkToggle"
-antiAfkToggle.Size = UDim2.new(1, -32, 0, 36)
-antiAfkToggle.Position = UDim2.new(0, 16, 0, 12)
-antiAfkToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-antiAfkToggle.Text = "ANTI-AFK"
-antiAfkToggle.Font = Enum.Font.SourceSansBold
-antiAfkToggle.TextSize = 20
-antiAfkToggle.TextColor3 = Color3.fromRGB(255,255,255)
-antiAfkToggle.BorderSizePixel = 0
-antiAfkToggle.TextXAlignment = Enum.TextXAlignment.Left
-antiAfkToggle.Parent = utilityFrame
-
-local afkCheck = Instance.new("TextLabel")
-afkCheck.Name = "Checkmark"
-afkCheck.Size = UDim2.new(0, 32, 1, 0)
-afkCheck.Position = UDim2.new(1, -36, 0, 0)
-afkCheck.BackgroundTransparency = 1
-afkCheck.Font = Enum.Font.SourceSansBold
-afkCheck.TextSize = 24
-afkCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-afkCheck.Text = ""
-afkCheck.Parent = antiAfkToggle
-
-local antiAfkState = false
-local function updateAntiAfkToggle()
-    antiAfkToggle.BackgroundColor3 = antiAfkState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    afkCheck.Text = antiAfkState and "✔" or ""
-end
-updateAntiAfkToggle()
-antiAfkToggle.MouseButton1Click:Connect(function()
-    antiAfkState = not antiAfkState
-    updateAntiAfkToggle()
-end)
-
-local autoCraftingToggle = Instance.new("TextButton")
-autoCraftingToggle.Name = "AutoCraftingToggle"
-autoCraftingToggle.Size = UDim2.new(1, -32, 0, 36)
-autoCraftingToggle.Position = UDim2.new(0, 16, 0, 52)
-autoCraftingToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-autoCraftingToggle.Text = "AUTO CRAFTING"
-autoCraftingToggle.Font = Enum.Font.SourceSansBold
-autoCraftingToggle.TextSize = 20
-autoCraftingToggle.TextColor3 = Color3.fromRGB(255,255,255)
-autoCraftingToggle.BorderSizePixel = 0
-autoCraftingToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoCraftingToggle.Parent = utilityFrame
-
-local craftingCheck = Instance.new("TextLabel")
-craftingCheck.Name = "Checkmark"
-craftingCheck.Size = UDim2.new(0, 32, 1, 0)
-craftingCheck.Position = UDim2.new(1, -36, 0, 0)
-craftingCheck.BackgroundTransparency = 1
-craftingCheck.Font = Enum.Font.SourceSansBold
-craftingCheck.TextSize = 24
-craftingCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
-craftingCheck.Text = ""
-craftingCheck.Parent = autoCraftingToggle
-
-local autoCraftingState = false
-local function updateAutoCraftingToggle()
-    autoCraftingToggle.BackgroundColor3 = autoCraftingState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
-    craftingCheck.Text = autoCraftingState and "✔" or ""
-end
-updateAutoCraftingToggle()
-autoCraftingToggle.MouseButton1Click:Connect(function()
-    autoCraftingState = not autoCraftingState
-    updateAutoCraftingToggle()
-end)
-
--- Automation Remotes for new features
-local plantRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("Plant_RE")
-local harvestRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("HarvestRemote")
-local sellInventoryRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("Sell_Inventory")
-local buyGearRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyGearStock")
-local buyCosmeticRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyCosmeticItem") or ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyCosmeticCrate")
-local buySummerShopRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyEventShopStock")
-local summerHarvestSubmitRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("SummerHarvestSubmitRemoteEvent")
-local buyMerchantRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyTravelingMerchantShopStock")
-local eggReadyToHatchRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("EggReadyToHatch_RE")
-local petEggService = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("PetEggService") or ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("PetsService")
-local craftingRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("CraftingGlobalObjectService")
-local craftingFailedRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("CraftingFailedRemoteEvent")
-
--- Summer plant IDs (example, replace with actual IDs if available)
-local summerPlantIDs = {"Starfish", "Seagull", "Crab", "Flamingo", "Toucan", "Sea Turtle", "Orangutan", "Seal", "Ostrich", "Peacock", "Capybara", "Scarlet Macaw", "Mimic Octopus", "Meerkat", "Sand Snake", "Axolotl", "Hyacinth Macaw", "Fennec Fox"}
-
--- Automation Loops
-spawn(function()
-    while true do
-        if autoPlantState and plantRemote then
-            plantRemote:FireServer()
-        end
-        if autoHarvestState and harvestRemote then
-            harvestRemote:FireServer()
-        end
-        if autoSellState and sellInventoryRemote then
-            sellInventoryRemote:FireServer()
-        end
-        if autoBuyGearState and buyGearRemote then
-            buyGearRemote:FireServer()
-        end
-        if autoBuyCosmeticState and buyCosmeticRemote then
-            buyCosmeticRemote:FireServer()
-        end
-        if eventAutoBuySummerState and buySummerShopRemote then
-            buySummerShopRemote:FireServer()
-        end
-        if eventAutoSubmitState and summerHarvestSubmitRemote then
-            summerHarvestSubmitRemote:FireServer()
-        end
-        if eventAutoClaimSummerState and harvestRemote then
-            -- Example: filter by summerPlantIDs (replace with actual logic if needed)
-            for _, plantID in ipairs(summerPlantIDs) do
-                harvestRemote:FireServer(plantID)
+-- Start auto-buy egg loop on script load
+if not autoBuyEggLoopRunning then
+    autoBuyEggLoopRunning = true
+    task.spawn(function()
+        while true do
+            if autoBuyEggState then
+                for _, egg in ipairs(selectedEggs) do
+                    if isEggInStock(egg) then
+                        if buyEggRemote then
+                            buyEggRemote:FireServer(egg)
+                        end
+                    end
+                end
             end
+            task.wait(0.1)
         end
-        if autoBuyMerchantState and buyMerchantRemote then
-            buyMerchantRemote:FireServer()
+    end)
+end
+
+-- Start auto-buy seed loop on script load
+if not autoBuySeedLoopRunning then
+    autoBuySeedLoopRunning = true
+    task.spawn(function()
+        while true do
+            if autoBuySeedState then
+                for _, seed in ipairs(selectedSeeds) do
+                    if isSeedInStock(seed) then
+                        if buySeedRemote then
+                            buySeedRemote:FireServer(seed)
+                        end
+                    end
+                end
+            end
+            task.wait(0.1)
         end
-        if autoHatchEggState and eggReadyToHatchRemote then
-            eggReadyToHatchRemote:FireServer()
-        end
-        if autoPlaceEggState and petEggService then
-            petEggService:FireServer()
-        end
-        if autoCraftingState and craftingRemote then
-            craftingRemote:FireServer()
-        end
-        if antiAfkState then
-            -- Simulate input every 60 seconds
-            VirtualInputManager = game:GetService("VirtualInputManager")
-            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
-            wait(0.1)
-            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Space, false, game)
-            wait(59.9)
-        else
-            wait(0.1)
-        end
-    end
-end)
+    end)
+end
 
 -- Tab Switching Logic
 local function selectTab(tabName)
