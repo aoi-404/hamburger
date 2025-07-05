@@ -708,6 +708,24 @@ function updateShopTogglePositions()
     -- Toggles
     autoBuyEggToggle.Position = UDim2.new(0, 20, 0, y + 18)
     autoBuySeedToggle.Position = UDim2.new(0, 20, 0, y + 18 + 54)
+    -- Gear Dropdown Button
+    gearDropdownBtn.Position = UDim2.new(0, 20, 0, y)
+    y = y + 44
+    -- Gear Dropdown List
+    if gearDropdownList.Visible then
+        local dropdownTop = shopFrame.AbsolutePosition.Y + y
+        local maxHeight = contentBottom - dropdownTop - 20
+        local needed = #gearOptions * 38
+        local showHeight = math.max(0, math.min(needed, maxHeight))
+        gearDropdownList.Position = UDim2.new(0, 20, 0, y)
+        gearDropdownList.Size = UDim2.new(1, -40, 0, showHeight)
+        gearDropdownList.CanvasSize = UDim2.new(0, 0, 0, needed)
+        y = y + showHeight
+    else
+        gearDropdownList.Position = UDim2.new(0, 20, 0, y)
+        gearDropdownList.Size = UDim2.new(1, -40, 0, 0)
+    end
+    autoBuyGearToggle.Position = UDim2.new(0, 20, 0, y + 18)
 end
 
 eggDropdownBtn.MouseButton1Click:Connect(function()
@@ -887,6 +905,7 @@ function updateShopTogglePositions()
     if gearDropdownList.Visible then
         gearDropdownList.Position = UDim2.new(0, 20, 0, y)
         gearDropdownList.Size = UDim2.new(1, -40, 0, #gearOptions * 38)
+        gearDropdownList.CanvasSize = UDim2.new(0, 0, 0, #gearOptions * 38)
         y = y + #gearOptions * 38
     else
         gearDropdownList.Position = UDim2.new(0, 20, 0, y)
