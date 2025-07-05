@@ -1,3 +1,140 @@
+Remote: ReplicatedStorage.GameEvents.LikeGarden
+Remote: ReplicatedStorage.GameEvents.FriendPotLinkEnded_RE
+Remote: ReplicatedStorage.GameEvents.SunResonance
+Remote: ReplicatedStorage.GameEvents.SunStrike
+Remote: ReplicatedStorage.GameEvents.PromptStarterPack
+Remote: ReplicatedStorage.GameEvents.UpdateFriendState
+Remote: ReplicatedStorage.GameEvents.CraftingGlobalObjectService
+Remote: ReplicatedStorage.GameEvents.GetPetCooldown
+Remote: ReplicatedStorage.GameEvents.CraftingFailedRemoteEvent
+Remote: ReplicatedStorage.GameEvents.SprayService_RE
+Remote: ReplicatedStorage.GameEvents.SetTutorialFinished
+Remote: ReplicatedStorage.GameEvents.MeteorStrike
+Remote: ReplicatedStorage.GameEvents.DiscoSetColor_RE
+Remote: ReplicatedStorage.GameEvents.TanningMirrorService
+Remote: ReplicatedStorage.GameEvents.PromptRSVP
+Remote: ReplicatedStorage.GameEvents.SummerHarvestRewardRemoteEvent
+Remote: ReplicatedStorage.GameEvents.SummerHarvestSubmitRemoteEvent
+Remote: ReplicatedStorage.GameEvents.RefreshPetModel
+Remote: ReplicatedStorage.GameEvents.InventorySortingServiceEvents.MoveEntry
+Remote: ReplicatedStorage.GameEvents.BuyTravelingMerchantShopStock
+Remote: ReplicatedStorage.GameEvents.MagnifyingGlassService_RE
+Remote: ReplicatedStorage.GameEvents.FireworkVisual
+Remote: ReplicatedStorage.GameEvents.FireworkLaunch
+Remote: ReplicatedStorage.GameEvents.PhysicalFirework
+Remote: ReplicatedStorage.ByteNetReliable
+Remote: ReplicatedStorage.GameAnalyticsError
+Remote: ReplicatedStorage.GameAnalyticsRemoteConfigs
+Remote: ReplicatedStorage.PostieReceived
+Remote: ReplicatedStorage.PostieSent
+Remote: Workspace.aadawdada261h.InputGateway.Activation
+Remote: Workspace.amaracakes2.InputGateway.Activation
+Remote: Workspace.Leecapada.InputGateway.Activation
+Remote: ReplicatedStorage.GameEvents.StarCallerService
+Remote: ReplicatedStorage.GameEvents.CosmeticCrateSkipped
+Remote: ReplicatedStorage.GameEvents.CosmeticCrateService
+Remote: ReplicatedStorage.GameEvents.CrateReadyToOpen_RE
+Remote: ReplicatedStorage.GameEvents.RemoteEvent
+Remote: ReplicatedStorage.GameEvents.HarvestRemote
+Remote: ReplicatedStorage.GameEvents.FriendInvitePrompterService
+Remote: ReplicatedStorage.GameEvents.ExperienceNotificationServicePrompterController
+Remote: ReplicatedStorage.GameEvents.CutsceneHandler
+Remote: ReplicatedStorage.GameEvents.ReplicationChannel
+Remote: ReplicatedStorage.GameEvents.LightningBoltWithNoFlash
+Remote: ReplicatedStorage.GameEvents.JandelCharge
+Remote: ReplicatedStorage.GameEvents.CosmeticPhysicalityService
+Remote: ReplicatedStorage.GameEvents.RefreshActivePetsUI
+Remote: ReplicatedStorage.GameEvents.CosmeticService
+Remote: ReplicatedStorage.GameEvents.BuyCosmeticCrate
+Remote: ReplicatedStorage.GameEvents.BuyCosmeticItem
+Remote: ReplicatedStorage.GameEvents.BuyNightEventShopStock
+Remote: ReplicatedStorage.GameEvents.BeeBolt
+Remote: ReplicatedStorage.GameEvents.DeleteObject
+Remote: ReplicatedStorage.GameEvents.SwarmFly
+Remote: ReplicatedStorage.GameEvents.EggTutorial
+Remote: ReplicatedStorage.GameEvents.CosmeticUpgradeService
+Remote: ReplicatedStorage.GameEvents.CanSeeShopPack
+Remote: ReplicatedStorage.GameEvents.PollenRadarHighlight
+Remote: ReplicatedStorage.GameEvents.NectorStaffRemoteEvent
+Remote: ReplicatedStorage.GameEvents.StartPollenRadarScan
+Remote: ReplicatedStorage.GameEvents.FinishPollenRadarScan
+Remote: ReplicatedStorage.GameEvents.FriendshipPotService_RE
+Remote: ReplicatedStorage.GameEvents.FriendshipPotToolService_RE
+Remote: ReplicatedStorage.GameEvents.PollenRadarCollectSound
+Remote: ReplicatedStorage.GameEvents.HoneyCrafterRemoteEvent
+Remote: ReplicatedStorage.GameEvents.PollenRadarReset
+Remote: ReplicatedStorage.GameEvents.FriendPotLink_RE
+Remote: ReplicatedStorage.GameEvents.LoadScreenEvent
+Remote: ReplicatedStorage.GameEvents.SortBackpackEvent
+Remote: ReplicatedStorage.GameEvents.ActivePetService
+Remote: ReplicatedStorage.GameEvents.SpawnCollectableSeed
+Remote: ReplicatedStorage.GameEvents.UnlockEventShopRemote
+Remote: ReplicatedStorage.GameEvents.SeedPackGiverEvent
+Remote: ReplicatedStorage.GameEvents.SprinklerService
+Remote: ReplicatedStorage.GameEvents.PetsService
+Remote: ReplicatedStorage.GameEvents.WeatherEventStarted
+Remote: ReplicatedStorage.GameEvents.FireDrop
+Remote: ReplicatedStorage.GameEvents.TurnOffEasterUI
+Remote: ReplicatedStorage.GameEvents.BuyPetEgg
+Remote: ReplicatedStorage.GameEvents.PetEggService
+Remote: ReplicatedStorage.GameEvents.EggReadyToHatch_RE
+Remote: ReplicatedStorage.GameEvents.ShecklesClient
+Remote: ReplicatedStorage.GameEvents.SellPet_RE
+Remote: ReplicatedStorage.GameEvents.PetGiftingService
+Remote: ReplicatedStorage.GameEvents.PetZoneAbility
+Remote: ReplicatedStorage.GameEvents.GiftPet
+Remote: ReplicatedStorage.GameEvents.AcceptPetGift
+Remote: ReplicatedStorage.GameEvents.PetSkipped
+Remote: ReplicatedStorage.GameEvents.RecallWrenchTeleport
+Remote: ReplicatedStorage.GameEvents.UnlockSlotFromPet
+Remote: ReplicatedStorage.GameEvents.SpecialEventStarted
+Remote: ReplicatedStorage.GameEvents.NightQuestRemoteEvent
+Remote: ReplicatedStorage.GameEvents.FavoriteToolRemote
+Remote: ReplicatedStorage.GameEvents.SettingsService
+Remote: ReplicatedStorage.GameEvents.HighlightRemote
+Remote: ReplicatedStorage.GameEvents.NightStaffRemoteEvent
+Remote: ReplicatedStorage.GameEvents.ClaimableCodeService
+Remote: ReplicatedStorage.GameEvents.SendClientSpecialEvent
+Remote: ReplicatedStorage.GameEvents.ReclaimerService_RE
+Remote: ReplicatedStorage.GameEvents.SummerHarvestRemoteEvent
+Remote: ReplicatedStorage.GameEvents.MeteorShower
+Remote: ReplicatedStorage.GameEvents.UpdateStock
+Remote: ReplicatedStorage.GameEvents.BuyGearStock
+Remote: ReplicatedStorage.GameEvents.DisplayChatMessage
+Remote: ReplicatedStorage.GameEvents.UpdateGearStock
+Remote: ReplicatedStorage.GameEvents.BuySeedStock
+Remote: ReplicatedStorage.GameEvents.DevRestockGearShop
+Remote: ReplicatedStorage.GameEvents.Enable_Top_Frame
+Remote: ReplicatedStorage.GameEvents.Favorite_Item
+Remote: ReplicatedStorage.GameEvents.Finish_Loading
+Remote: ReplicatedStorage.GameEvents.Remove_Item
+Remote: ReplicatedStorage.GameEvents.LightningBolt
+Remote: ReplicatedStorage.GameEvents.Notification
+Remote: ReplicatedStorage.GameEvents.PlaySound
+Remote: ReplicatedStorage.GameEvents.Plant_RE
+Remote: ReplicatedStorage.GameEvents.Pop_Effect
+Remote: ReplicatedStorage.GameEvents.Prompt_Friend
+Remote: ReplicatedStorage.GameEvents.BuyEasterStock
+Remote: ReplicatedStorage.GameEvents.Sell_Inventory
+Remote: ReplicatedStorage.GameEvents.Sell_Item
+Remote: ReplicatedStorage.GameEvents.Purchase_Object
+Remote: ReplicatedStorage.GameEvents.SendClientWeatherEvents
+Remote: ReplicatedStorage.GameEvents.Send_Rating
+Remote: ReplicatedStorage.GameEvents.Spawn_Arrow
+Remote: ReplicatedStorage.GameEvents.Sprinkler_RE
+Remote: ReplicatedStorage.GameEvents.Start_Cutscene
+Remote: ReplicatedStorage.GameEvents.Water_RE
+Remote: ReplicatedStorage.GameEvents.BuyEventShopStock
+Remote: ReplicatedStorage.GameEvents.Close_Frames
+Remote: ReplicatedStorage.GameEvents.PickupSound
+Remote: ReplicatedStorage.GameEvents.TrowelRemote
+Remote: ReplicatedStorage.GameEvents.LightningRodService
+Remote: ReplicatedStorage.GameEvents.HoneyMachineService_RE
+Remote: ReplicatedStorage.GameEvents.FriendGiftEvent
+Remote: ReplicatedStorage.GameEvents.DeveloperPurchase
+Remote: ReplicatedStorage.CmdrClient.CmdrEvent
+Remote: ReplicatedStorage.CmdrClient.CmdrFunction
+Remote: ReplicatedStorage.GameEvents.DataStreames
 
 --[[
 GAG SCRIPT BY:BREAD
@@ -725,7 +862,6 @@ end)
 local gearDropdownBtn = Instance.new("TextButton")
 gearDropdownBtn.Name = "GearDropdownBtn"
 gearDropdownBtn.Size = UDim2.new(1, -40, 0, 44)
-gearDropdownBtn.Position = UDim2.new(0, 20, 0, 164 + (#seedOptions > 0 and (#seedOptions * 38) or 0))
 gearDropdownBtn.BackgroundColor3 = Color3.fromRGB(40, 90, 180)
 gearDropdownBtn.Text = "BUY GEAR:"
 gearDropdownBtn.Font = Enum.Font.SourceSansBold
@@ -740,7 +876,6 @@ gearDropdownBtn.ZIndex = 2
 local gearDropdownList = Instance.new("ScrollingFrame")
 gearDropdownList.Name = "GearDropdownList"
 gearDropdownList.Size = UDim2.new(1, -40, 0, 0)
-gearDropdownList.Position = UDim2.new(0, 20, 0, 208 + (#seedOptions > 0 and (#seedOptions * 38) or 0))
 gearDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 gearDropdownList.BorderSizePixel = 0
 gearDropdownList.Visible = false
@@ -827,7 +962,6 @@ gearDropdownList.CanvasSize = UDim2.new(0, 0, 0, #gearOptions * 38)
 local autoBuyGearToggle = Instance.new("TextButton")
 autoBuyGearToggle.Name = "AutoBuyGearToggle"
 autoBuyGearToggle.Size = UDim2.new(1, -32, 0, 36)
-autoBuyGearToggle.Position = UDim2.new(0, 20, 0, 212 + (#gearOptions * 38))
 autoBuyGearToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
 autoBuyGearToggle.Text = "AUTO BUY GEAR"
 autoBuyGearToggle.Font = Enum.Font.SourceSansBold
@@ -849,38 +983,36 @@ gearCheck.Text = ""
 gearCheck.Parent = autoBuyGearToggle
 
 local autoBuyGearState = false
-local autoBuyGearLoopRunning = false
 local function updateAutoBuyGearToggle()
-    if autoBuyGearState then
-        autoBuyGearToggle.BackgroundColor3 = Color3.fromRGB(40, 90, 180)
-        gearCheck.Text = "✅"
-    else
-        autoBuyGearToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
-        gearCheck.Text = ""
-    end
+    autoBuyGearToggle.BackgroundColor3 = autoBuyGearState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
+    gearCheck.Text = autoBuyGearState and "✔" or ""
 end
 updateAutoBuyGearToggle()
 autoBuyGearToggle.MouseButton1Click:Connect(function()
     autoBuyGearState = not autoBuyGearState
     updateAutoBuyGearToggle()
-    if autoBuyGearState and not autoBuyGearLoopRunning then
-        autoBuyGearLoopRunning = true
-        task.spawn(function()
-            while autoBuyGearState do
+end)
+
+-- Automation Remote for Gear
+local buyGearRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyGearStock")
+
+-- Auto-buy gear logic (loop always running)
+local autoBuyGearLoopRunning = false
+if not autoBuyGearLoopRunning then
+    autoBuyGearLoopRunning = true
+    task.spawn(function()
+        while true do
+            if autoBuyGearState then
                 for _, gear in ipairs(selectedGear) do
                     if buyGearRemote then
                         buyGearRemote:FireServer(gear)
                     end
                 end
-                task.wait(0.1)
             end
-            autoBuyGearLoopRunning = false
-        end)
-    end
-end)
-
--- Automation Remote for Gear
-local buyGearRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyGearStock")
+            task.wait(0.1)
+        end
+    end)
+end
 
 -- Update SHOP toggle positions to include gear controls
 local oldUpdateShopTogglePositions = updateShopTogglePositions
@@ -907,6 +1039,7 @@ gearDropdownBtn.MouseButton1Click:Connect(function()
 end)
 
 -- Hide dropdowns if clicking elsewhere
+local oldUserInputBegan = UserInputService.InputBegan
 UserInputService.InputBegan:Connect(function(input, processed)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         local changed = false
