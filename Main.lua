@@ -1,8 +1,19 @@
+--[[
+    GAG SCRIPT BY:BREAD - Grow a Garden Automation Script
+    Compatible with Delta Executor. No external dependencies.
+    Features: Modular GUI, category panels, auto farm/shop/events/pets/utility/special, safe remote calls, clean-up.
+    Author: GitHub Copilot
+]]
+
+-- Ensure script only runs as a LocalScript (client)
+if not game:GetService("Players").LocalPlayer then return end
+
+--// Services
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
+local LocalPlayer = Players.LocalQPlayer
 
 --// GUI Setup
 local ScreenGui = Instance.new("ScreenGui")
