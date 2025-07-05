@@ -706,7 +706,7 @@ function updateShopTogglePositions()
         seedDropdownList.Position = UDim2.new(0, 20, 0, y)
         seedDropdownList.Size = UDim2.new(1, -40, 0, 0)
     end
-    -- Gear Dropdown Button (moved up)
+    -- Gear Dropdown Button (immediately after seed dropdown)
     gearDropdownBtn.Position = UDim2.new(0, 20, 0, y)
     y = y + 44
     -- Gear Dropdown List
@@ -898,30 +898,6 @@ if not autoBuyGearLoopRunning then
         end
     end)
 end
-
--- Update SHOP toggle positions to include gear controls
-local oldUpdateShopTogglePositions = updateShopTogglePositions
-function updateShopTogglePositions()
-    oldUpdateShopTogglePositions()
-    -- Place gear controls below seed toggles
-    local y = autoBuySeedToggle.Position.Y.Offset + autoBuySeedToggle.Size.Y.Offset + 18
-    gearDropdownBtn.Position = UDim2.new(0, 20, 0, y)
-    y = y + 44
-    if gearDropdownList.Visible then
-        gearDropdownList.Position = UDim2.new(0, 20, 0, y)
-        gearDropdownList.Size = UDim2.new(1, -40, 0, #gearOptions * 38)
-        y = y + #gearOptions * 38
-    else
-        gearDropdownList.Position = UDim2.new(0, 20, 0, y)
-        gearDropdownList.Size = UDim2.new(1, -40, 0, 0)
-    end
-    autoBuyGearToggle.Position = UDim2.new(0, 20, 0, y + 18)
-end
-
-gearDropdownBtn.MouseButton1Click:Connect(function()
-    gearDropdownList.Visible = not gearDropdownList.Visible
-    updateShopTogglePositions()
-end)
 
 -- Hide dropdowns if clicking elsewhere
 local oldUserInputBegan = UserInputService.InputBegan
