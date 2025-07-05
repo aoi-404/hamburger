@@ -3,9 +3,9 @@
     Compatible with Delta Executor. No external dependencies.
     Features: Modular GUI, category panels, auto farm/shop/events/pets/utility/special, safe remote calls, clean-up.
     Author: GitHub Copilot
-]]
+]]--
 
--- Ensure script only runs as a LocalScript (client)
+--// Ensure script only runs as a LocalScript (client)
 if not game:GetService("Players").LocalPlayer then return end
 
 --// Services
