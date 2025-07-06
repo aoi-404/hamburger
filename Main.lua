@@ -200,12 +200,9 @@ local shopFrame = tabContent["SHOP"]
 
 -- Y position tracker for vertical stacking
 local y = 20
-local dropdownStates = {Gear = false, Egg = false, Seed = false}
-local function closeAllDropdowns(except)
-    if except ~= "Gear" then gearDropdownList.Visible = false dropdownStates.Gear = false end
-    if except ~= "Egg" then eggDropdownList.Visible = false dropdownStates.Egg = false end
-    if except ~= "Seed" then seedDropdownList.Visible = false dropdownStates.Seed = false end
-end
+
+-- Declare dropdown list variables first for scope
+local gearDropdownList, eggDropdownList, seedDropdownList
 
 -- GEAR SECTION
 local gearHeader = Instance.new("TextLabel")
@@ -236,7 +233,7 @@ gearDropdownBtn.Parent = shopFrame
 gearDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
-local gearDropdownList = Instance.new("ScrollingFrame")
+gearDropdownList = Instance.new("ScrollingFrame")
 gearDropdownList.Name = "GearDropdownList"
 gearDropdownList.Size = UDim2.new(1, -40, 0, 0)
 gearDropdownList.Position = UDim2.new(0, 20, 0, y)
@@ -325,7 +322,7 @@ eggDropdownBtn.Parent = shopFrame
 eggDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
-local eggDropdownList = Instance.new("ScrollingFrame")
+eggDropdownList = Instance.new("ScrollingFrame")
 eggDropdownList.Name = "EggDropdownList"
 eggDropdownList.Size = UDim2.new(1, -40, 0, 0)
 eggDropdownList.Position = UDim2.new(0, 20, 0, y)
@@ -404,7 +401,7 @@ seedDropdownBtn.Parent = shopFrame
 seedDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
-local seedDropdownList = Instance.new("ScrollingFrame")
+seedDropdownList = Instance.new("ScrollingFrame")
 seedDropdownList.Name = "SeedDropdownList"
 seedDropdownList.Size = UDim2.new(1, -40, 0, 0)
 seedDropdownList.Position = UDim2.new(0, 20, 0, y)
@@ -446,6 +443,14 @@ seedDropdownBtn.MouseButton1Click:Connect(function()
         autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + 0)
     end
 end)
+
+-- Now that all dropdown lists are created, define dropdownStates and closeAllDropdowns
+local dropdownStates = {Gear = false, Egg = false, Seed = false}
+local function closeAllDropdowns(except)
+    if except ~= "Gear" then gearDropdownList.Visible = false dropdownStates.Gear = false end
+    if except ~= "Egg" then eggDropdownList.Visible = false dropdownStates.Egg = false end
+    if except ~= "Seed" then seedDropdownList.Visible = false dropdownStates.Seed = false end
+end
 
 -- Set all tab content children ZIndex to 22 (above contentFrame)
 for _, frame in pairs(tabContent) do
