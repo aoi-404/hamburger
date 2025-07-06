@@ -444,13 +444,42 @@ seedDropdownBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- Now that all dropdown lists are created, define dropdownStates and closeAllDropdowns
-local dropdownStates = {Gear = false, Egg = false, Seed = false}
-local function closeAllDropdowns(except)
-    if except ~= "Gear" then gearDropdownList.Visible = false dropdownStates.Gear = false end
-    if except ~= "Egg" then eggDropdownList.Visible = false dropdownStates.Egg = false end
-    if except ~= "Seed" then seedDropdownList.Visible = false dropdownStates.Seed = false end
+-- Dropdown options (example values, replace with your own)
+local gearOptions = {"Sword", "Shield", "Bow", "Staff"}
+local eggOptions = {"Dinosaur Egg", "Dragon Egg", "Phoenix Egg"}
+local seedOptions = {"Wheat Seed", "Corn Seed", "Pumpkin Seed"}
+
+-- Helper to clear and repopulate a dropdown list
+local function populateDropdownList(listFrame, options)
+    -- Remove old buttons
+    for _, child in ipairs(listFrame:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
+    -- Add new buttons
+    for i, option in ipairs(options) do
+        local btn = Instance.new("TextButton")
+        btn.Size = UDim2.new(1, 0, 0, 36)
+        btn.Position = UDim2.new(0, 0, 0, (i-1)*38)
+        btn.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+        btn.Text = option
+        btn.Font = Enum.Font.SourceSans
+        btn.TextSize = 20
+        btn.TextColor3 = Color3.fromRGB(255,255,255)
+        btn.BorderSizePixel = 0
+        btn.Parent = listFrame
+        btn.ZIndex = 24
+        -- You can add a click event here if you want to select the option
+    end
+    -- Set CanvasSize for scrolling
+    listFrame.CanvasSize = UDim2.new(0, 0, 0, #options * 38)
 end
+
+-- Populate dropdowns on script start
+populateDropdownList(gearDropdownList, gearOptions)
+populateDropdownList(eggDropdownList, eggOptions)
+populateDropdownList(seedDropdownList, seedOptions)
 
 -- Set all tab content children ZIndex to 22 (above contentFrame)
 for _, frame in pairs(tabContent) do
