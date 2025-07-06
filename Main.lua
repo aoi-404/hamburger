@@ -46,6 +46,7 @@ topBar.Position = UDim2.new(0, 0, 0, 0)
 topBar.BackgroundColor3 = Color3.fromRGB(80, 90, 110)
 topBar.BorderSizePixel = 0
 topBar.Parent = sidebar
+topBar.ZIndex = 30 -- Ensure top bar is always on top
 
 local topBarTitle = Instance.new("TextLabel")
 topBarTitle.Name = "TopBarTitle"
@@ -58,6 +59,7 @@ topBarTitle.TextSize = 24
 topBarTitle.TextColor3 = Color3.fromRGB(40, 40, 40)
 topBarTitle.TextXAlignment = Enum.TextXAlignment.Left
 topBarTitle.Parent = topBar
+topBarTitle.ZIndex = 31
 
 local minimizeBtn = Instance.new("TextButton")
 minimizeBtn.Name = "MinimizeBtn"
@@ -69,6 +71,7 @@ minimizeBtn.Font = Enum.Font.SourceSansBold
 minimizeBtn.TextSize = 22
 minimizeBtn.TextColor3 = Color3.fromRGB(0,0,0)
 minimizeBtn.Parent = topBar
+minimizeBtn.ZIndex = 32
 
 local closeBtn = Instance.new("TextButton")
 closeBtn.Name = "CloseBtn"
@@ -80,6 +83,15 @@ closeBtn.Font = Enum.Font.SourceSansBold
 closeBtn.TextSize = 22
 closeBtn.TextColor3 = Color3.fromRGB(255,255,255)
 closeBtn.Parent = topBar
+closeBtn.ZIndex = 32
+
+-- Minimize/Close functionality
+minimizeBtn.MouseButton1Click:Connect(function()
+    sidebar.Visible = not sidebar.Visible
+end)
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui.Enabled = false
+end)
 
 -- Sidebar Tabs
 local tabNames = {"EVENT", "SHOP", "FARM"}
@@ -116,7 +128,7 @@ contentFrame.Position = UDim2.new(0, 124, 0, 44)
 contentFrame.BackgroundColor3 = Color3.fromRGB(120, 130, 150)
 contentFrame.BorderSizePixel = 0
 contentFrame.Parent = sidebar
-contentFrame.ZIndex = 10
+contentFrame.ZIndex = 21 -- Above sidebar, below top bar
 
 -- Tab Content (ensure ZIndex and parent)
 local tabContent = {}
@@ -127,7 +139,7 @@ for _, name in ipairs(tabNames) do
     frame.BackgroundTransparency = 1
     frame.Visible = (name == "EVENT")
     frame.Parent = contentFrame
-    frame.ZIndex = 10 -- Increased ZIndex for visibility
+    frame.ZIndex = 21 -- Above sidebar, below top bar
     tabContent[name] = frame
 end
 
@@ -144,7 +156,7 @@ eventHeader.TextColor3 = Color3.fromRGB(255,255,255)
 eventHeader.BorderSizePixel = 0
 eventHeader.TextXAlignment = Enum.TextXAlignment.Center
 eventHeader.Parent = eventFrame
-eventHeader.ZIndex = 12
+eventHeader.ZIndex = 22
 
 local autoSubmitToggle = Instance.new("TextButton")
 autoSubmitToggle.Name = "AutoSubmitToggle"
@@ -158,7 +170,7 @@ autoSubmitToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoSubmitToggle.BorderSizePixel = 0
 autoSubmitToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoSubmitToggle.Parent = eventFrame
-autoSubmitToggle.ZIndex = 12
+autoSubmitToggle.ZIndex = 22
 
 local check = Instance.new("TextLabel")
 check.Name = "Checkmark"
@@ -170,7 +182,7 @@ check.TextSize = 24
 check.TextColor3 = Color3.fromRGB(220, 220, 220)
 check.Text = ""
 check.Parent = autoSubmitToggle
-check.ZIndex = 13
+check.ZIndex = 23
 
 local autoSubmitState = false
 local function updateAutoSubmitToggle()
@@ -200,7 +212,7 @@ gearHeader.TextSize = 22
 gearHeader.TextColor3 = Color3.fromRGB(255,255,255)
 gearHeader.TextXAlignment = Enum.TextXAlignment.Left
 gearHeader.Parent = shopFrame
-gearHeader.ZIndex = 11
+gearHeader.ZIndex = 22
 y = y + 32 + 6
 
 local gearDropdownBtn = Instance.new("TextButton")
@@ -215,7 +227,7 @@ gearDropdownBtn.TextColor3 = Color3.fromRGB(255,255,255)
 gearDropdownBtn.BorderSizePixel = 0
 gearDropdownBtn.TextXAlignment = Enum.TextXAlignment.Center
 gearDropdownBtn.Parent = shopFrame
-gearDropdownBtn.ZIndex = 12
+gearDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
 local gearDropdownList = Instance.new("ScrollingFrame")
@@ -226,7 +238,7 @@ gearDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 gearDropdownList.BorderSizePixel = 0
 gearDropdownList.Visible = false
 gearDropdownList.Parent = shopFrame
-gearDropdownList.ZIndex = 13
+gearDropdownList.ZIndex = 23
 
 local autoBuyGearToggle = Instance.new("TextButton")
 autoBuyGearToggle.Name = "AutoBuyGearToggle"
@@ -240,7 +252,7 @@ autoBuyGearToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuyGearToggle.BorderSizePixel = 0
 autoBuyGearToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuyGearToggle.Parent = shopFrame
-autoBuyGearToggle.ZIndex = 12
+autoBuyGearToggle.ZIndex = 22
 
 -- GEAR LIST OPTIONS
 local gearOptions = {
@@ -290,7 +302,7 @@ eggHeader.TextSize = 22
 eggHeader.TextColor3 = Color3.fromRGB(255,255,255)
 eggHeader.TextXAlignment = Enum.TextXAlignment.Left
 eggHeader.Parent = shopFrame
-eggHeader.ZIndex = 11
+eggHeader.ZIndex = 22
 y = y + 32 + 6
 
 local eggDropdownBtn = Instance.new("TextButton")
@@ -305,7 +317,7 @@ eggDropdownBtn.TextColor3 = Color3.fromRGB(255,255,255)
 eggDropdownBtn.BorderSizePixel = 0
 eggDropdownBtn.TextXAlignment = Enum.TextXAlignment.Center
 eggDropdownBtn.Parent = shopFrame
-eggDropdownBtn.ZIndex = 12
+eggDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
 local eggDropdownList = Instance.new("ScrollingFrame")
@@ -316,7 +328,7 @@ eggDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 eggDropdownList.BorderSizePixel = 0
 eggDropdownList.Visible = false
 eggDropdownList.Parent = shopFrame
-eggDropdownList.ZIndex = 13
+eggDropdownList.ZIndex = 23
 
 local autoBuyEggToggle = Instance.new("TextButton")
 autoBuyEggToggle.Name = "AutoBuyEggToggle"
@@ -330,7 +342,7 @@ autoBuyEggToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuyEggToggle.BorderSizePixel = 0
 autoBuyEggToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuyEggToggle.Parent = shopFrame
-autoBuyEggToggle.ZIndex = 12
+autoBuyEggToggle.ZIndex = 22
 
 -- EGG LIST OPTIONS
 local eggOptions = {
@@ -380,7 +392,7 @@ seedHeader.TextSize = 22
 seedHeader.TextColor3 = Color3.fromRGB(255,255,255)
 seedHeader.TextXAlignment = Enum.TextXAlignment.Left
 seedHeader.Parent = shopFrame
-seedHeader.ZIndex = 11
+seedHeader.ZIndex = 22
 y = y + 32 + 6
 
 local seedDropdownBtn = Instance.new("TextButton")
@@ -395,7 +407,7 @@ seedDropdownBtn.TextColor3 = Color3.fromRGB(255,255,255)
 seedDropdownBtn.BorderSizePixel = 0
 seedDropdownBtn.TextXAlignment = Enum.TextXAlignment.Center
 seedDropdownBtn.Parent = shopFrame
-seedDropdownBtn.ZIndex = 12
+seedDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
 local seedDropdownList = Instance.new("ScrollingFrame")
@@ -406,7 +418,7 @@ seedDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 seedDropdownList.BorderSizePixel = 0
 seedDropdownList.Visible = false
 seedDropdownList.Parent = shopFrame
-seedDropdownList.ZIndex = 13
+seedDropdownList.ZIndex = 23
 
 local autoBuySeedToggle = Instance.new("TextButton")
 autoBuySeedToggle.Name = "AutoBuySeedToggle"
@@ -420,7 +432,7 @@ autoBuySeedToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuySeedToggle.BorderSizePixel = 0
 autoBuySeedToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuySeedToggle.Parent = shopFrame
-autoBuySeedToggle.ZIndex = 12
+autoBuySeedToggle.ZIndex = 22
 
 -- SEED LIST OPTIONS
 local seedOptions = {
@@ -488,6 +500,15 @@ end
 updateSeedDropdownText()
 seedDropdownList.CanvasSize = UDim2.new(0, 0, 0, #seedOptions * 38)
 
+-- Set all tab content children ZIndex to 22 (above contentFrame)
+for _, frame in pairs(tabContent) do
+    for _, child in ipairs(frame:GetChildren()) do
+        if child:IsA("GuiObject") then
+            child.ZIndex = 22
+        end
+    end
+end
+
 -- Ensure sidebar and tab buttons are always on top
 sidebar.ZIndex = 20
 for i, name in ipairs(tabNames) do
@@ -496,10 +517,10 @@ for i, name in ipairs(tabNames) do
         tabBtn.ZIndex = 20
     end
 end
--- Ensure content frame and tab content are below
-contentFrame.ZIndex = 10
+-- Ensure content frame and tab content are above sidebar
+contentFrame.ZIndex = 21
 for _, frame in pairs(tabContent) do
-    frame.ZIndex = 10
+    frame.ZIndex = 21
 end
 
 -- Reconnect tab button click events
@@ -516,4 +537,55 @@ for name, btn in pairs(tabButtons) do
         selectTab(name)
     end)
 end
- 
+
+-- FARM TAB CONTENT
+local farmFrame = tabContent["FARM"]
+local farmHeader = Instance.new("TextLabel")
+farmHeader.Size = UDim2.new(1, -32, 0, 40)
+farmHeader.Position = UDim2.new(0, 16, 0, 16)
+farmHeader.BackgroundColor3 = Color3.fromRGB(40, 90, 180)
+farmHeader.Text = "FARM MANAGER"
+farmHeader.Font = Enum.Font.SourceSansBold
+farmHeader.TextSize = 22
+farmHeader.TextColor3 = Color3.fromRGB(255,255,255)
+farmHeader.BorderSizePixel = 0
+farmHeader.TextXAlignment = Enum.TextXAlignment.Center
+farmHeader.Parent = farmFrame
+farmHeader.ZIndex = 22
+
+local farmToggle = Instance.new("TextButton")
+farmToggle.Name = "FarmToggle"
+farmToggle.Size = UDim2.new(1, -32, 0, 36)
+farmToggle.Position = UDim2.new(0, 16, 0, 64)
+farmToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
+farmToggle.Text = "AUTO FARM:"
+farmToggle.Font = Enum.Font.SourceSansBold
+farmToggle.TextSize = 20
+farmToggle.TextColor3 = Color3.fromRGB(255,255,255)
+farmToggle.BorderSizePixel = 0
+farmToggle.TextXAlignment = Enum.TextXAlignment.Left
+farmToggle.Parent = farmFrame
+farmToggle.ZIndex = 22
+
+local farmCheck = Instance.new("TextLabel")
+farmCheck.Name = "Checkmark"
+farmCheck.Size = UDim2.new(0, 32, 1, 0)
+farmCheck.Position = UDim2.new(1, -36, 0, 0)
+farmCheck.BackgroundTransparency = 1
+farmCheck.Font = Enum.Font.SourceSansBold
+farmCheck.TextSize = 24
+farmCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
+farmCheck.Text = ""
+farmCheck.Parent = farmToggle
+farmCheck.ZIndex = 23
+
+local autoFarmState = false
+local function updateFarmToggle()
+    farmToggle.BackgroundColor3 = autoFarmState and Color3.fromRGB(40, 90, 180) or Color3.fromRGB(60, 90, 130)
+    farmCheck.Text = autoFarmState and "✔" or ""
+end
+updateFarmToggle()
+farmToggle.MouseButton1Click:Connect(function()
+    autoFarmState = not autoFarmState
+    updateFarmToggle()
+end)
