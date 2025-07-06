@@ -205,19 +205,10 @@ shopScroll.Size = UDim2.new(1, 0, 1, 0)
 shopScroll.Position = UDim2.new(0, 0, 0, 0)
 shopScroll.BackgroundTransparency = 1
 shopScroll.BorderSizePixel = 0
-shopScroll.CanvasSize = UDim2.new(0, 0, 0, 600) -- Adjust as needed
+shopScroll.CanvasSize = UDim2.new(0, 0, 0, 600)
 shopScroll.ScrollBarThickness = 8
 shopScroll.Parent = shopFrame
 shopScroll.ZIndex = 21
-
--- Move all children of shopFrame (except ShopScroll) into ShopScroll (fix: do this after all children are created)
-local function moveShopChildrenToScroll()
-    for _, child in ipairs(shopFrame:GetChildren()) do
-        if child ~= shopScroll then
-            child.Parent = shopScroll
-        end
-    end
-end
 
 -- Y position tracker for vertical stacking
 local y = 20
@@ -235,7 +226,7 @@ gearHeader.Font = Enum.Font.SourceSansBold
 gearHeader.TextSize = 22
 gearHeader.TextColor3 = Color3.fromRGB(255,255,255)
 gearHeader.TextXAlignment = Enum.TextXAlignment.Left
-gearHeader.Parent = shopFrame
+gearHeader.Parent = shopScroll
 gearHeader.ZIndex = 22
 y = y + 32 + 6
 
@@ -250,7 +241,7 @@ gearDropdownBtn.TextSize = 22
 gearDropdownBtn.TextColor3 = Color3.fromRGB(255,255,255)
 gearDropdownBtn.BorderSizePixel = 0
 gearDropdownBtn.TextXAlignment = Enum.TextXAlignment.Center
-gearDropdownBtn.Parent = shopFrame
+gearDropdownBtn.Parent = shopScroll
 gearDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
@@ -261,9 +252,8 @@ gearDropdownList.Position = UDim2.new(0, 20, 0, y)
 gearDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 gearDropdownList.BorderSizePixel = 0
 gearDropdownList.Visible = false
-gearDropdownList.Parent = shopFrame
+gearDropdownList.Parent = shopScroll
 gearDropdownList.ZIndex = 23
-
 y = y + 0 -- Will be updated dynamically when dropdown is open
 
 local autoBuyGearToggle = Instance.new("TextButton")
@@ -277,7 +267,7 @@ autoBuyGearToggle.TextSize = 20
 autoBuyGearToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuyGearToggle.BorderSizePixel = 0
 autoBuyGearToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoBuyGearToggle.Parent = shopFrame
+autoBuyGearToggle.Parent = shopScroll
 autoBuyGearToggle.ZIndex = 22
 y = y + 36 + 12
 
@@ -310,7 +300,7 @@ eggHeader.Font = Enum.Font.SourceSansBold
 eggHeader.TextSize = 22
 eggHeader.TextColor3 = Color3.fromRGB(255,255,255)
 eggHeader.TextXAlignment = Enum.TextXAlignment.Left
-eggHeader.Parent = shopFrame
+eggHeader.Parent = shopScroll
 eggHeader.ZIndex = 22
 y = y + 32 + 6
 
@@ -325,7 +315,7 @@ eggDropdownBtn.TextSize = 22
 eggDropdownBtn.TextColor3 = Color3.fromRGB(255,255,255)
 eggDropdownBtn.BorderSizePixel = 0
 eggDropdownBtn.TextXAlignment = Enum.TextXAlignment.Center
-eggDropdownBtn.Parent = shopFrame
+eggDropdownBtn.Parent = shopScroll
 eggDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
@@ -336,9 +326,8 @@ eggDropdownList.Position = UDim2.new(0, 20, 0, y)
 eggDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 eggDropdownList.BorderSizePixel = 0
 eggDropdownList.Visible = false
-eggDropdownList.Parent = shopFrame
+eggDropdownList.Parent = shopScroll
 eggDropdownList.ZIndex = 23
-
 y = y + 0 -- Will be updated dynamically when dropdown is open
 
 local autoBuyEggToggle = Instance.new("TextButton")
@@ -352,7 +341,7 @@ autoBuyEggToggle.TextSize = 20
 autoBuyEggToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuyEggToggle.BorderSizePixel = 0
 autoBuyEggToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoBuyEggToggle.Parent = shopFrame
+autoBuyEggToggle.Parent = shopScroll
 autoBuyEggToggle.ZIndex = 22
 y = y + 36 + 12
 
@@ -380,7 +369,7 @@ seedHeader.Font = Enum.Font.SourceSansBold
 seedHeader.TextSize = 22
 seedHeader.TextColor3 = Color3.fromRGB(255,255,255)
 seedHeader.TextXAlignment = Enum.TextXAlignment.Left
-seedHeader.Parent = shopFrame
+seedHeader.Parent = shopScroll
 seedHeader.ZIndex = 22
 y = y + 32 + 6
 
@@ -395,7 +384,7 @@ seedDropdownBtn.TextSize = 22
 seedDropdownBtn.TextColor3 = Color3.fromRGB(255,255,255)
 seedDropdownBtn.BorderSizePixel = 0
 seedDropdownBtn.TextXAlignment = Enum.TextXAlignment.Center
-seedDropdownBtn.Parent = shopFrame
+seedDropdownBtn.Parent = shopScroll
 seedDropdownBtn.ZIndex = 22
 y = y + 44 + 6
 
@@ -406,9 +395,8 @@ seedDropdownList.Position = UDim2.new(0, 20, 0, y)
 seedDropdownList.BackgroundColor3 = Color3.fromRGB(60, 120, 180)
 seedDropdownList.BorderSizePixel = 0
 seedDropdownList.Visible = false
-seedDropdownList.Parent = shopFrame
+seedDropdownList.Parent = shopScroll
 seedDropdownList.ZIndex = 23
-
 y = y + 0 -- Will be updated dynamically when dropdown is open
 
 local autoBuySeedToggle = Instance.new("TextButton")
@@ -422,21 +410,14 @@ autoBuySeedToggle.TextSize = 20
 autoBuySeedToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuySeedToggle.BorderSizePixel = 0
 autoBuySeedToggle.TextXAlignment = Enum.TextXAlignment.Left
-autoBuySeedToggle.Parent = shopFrame
+autoBuySeedToggle.Parent = shopScroll
 autoBuySeedToggle.ZIndex = 22
-
 y = y + 36 + 12
 
--- SEED DROPDOWN BUTTON EVENT
-seedDropdownBtn.MouseButton1Click:Connect(function()
-    local open = not seedDropdownList.Visible
-    closeAllDropdowns(open and "Seed" or nil)
-    seedDropdownList.Visible = open
-    dropdownStates.Seed = open
-    setDropdownHeight(seedDropdownList, seedOptions)
-    autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + seedDropdownList.Size.Y.Offset + 6)
-end)
+-- Update CanvasSize for shopScroll
+shopScroll.CanvasSize = UDim2.new(0, 0, 0, y + 20)
 
+-- Update all dropdown logic to use the new parents and positions
 -- Dropdown options (example values, replace with your own)
 local gearOptions = {"Sword", "Shield", "Bow", "Staff"}
 local eggOptions = {"Dinosaur Egg", "Dragon Egg", "Phoenix Egg"}
