@@ -173,10 +173,45 @@ end)
 -- SHOP TAB CONTENT
 local shopFrame = tabContent["SHOP"]
 
+-- Section Headers
+local gearHeader = Instance.new("TextLabel")
+gearHeader.Size = UDim2.new(1, -40, 0, 32)
+gearHeader.Position = UDim2.new(0, 20, 0, 20)
+gearHeader.BackgroundTransparency = 1
+gearHeader.Text = "BUY GEAR:"
+gearHeader.Font = Enum.Font.SourceSansBold
+gearHeader.TextSize = 22
+gearHeader.TextColor3 = Color3.fromRGB(255,255,255)
+gearHeader.TextXAlignment = Enum.TextXAlignment.Left
+gearHeader.Parent = shopFrame
+
+local eggHeader = Instance.new("TextLabel")
+eggHeader.Size = UDim2.new(1, -40, 0, 32)
+eggHeader.Position = UDim2.new(0, 20, 0, 70)
+eggHeader.BackgroundTransparency = 1
+eggHeader.Text = "BUY EGG:"
+eggHeader.Font = Enum.Font.SourceSansBold
+eggHeader.TextSize = 22
+eggHeader.TextColor3 = Color3.fromRGB(255,255,255)
+eggHeader.TextXAlignment = Enum.TextXAlignment.Left
+eggHeader.Parent = shopFrame
+
+local seedHeader = Instance.new("TextLabel")
+seedHeader.Size = UDim2.new(1, -40, 0, 32)
+seedHeader.Position = UDim2.new(0, 20, 0, 220)
+seedHeader.BackgroundTransparency = 1
+seedHeader.Text = "BUY SEEDS:"
+seedHeader.Font = Enum.Font.SourceSansBold
+seedHeader.TextSize = 22
+seedHeader.TextColor3 = Color3.fromRGB(255,255,255)
+seedHeader.TextXAlignment = Enum.TextXAlignment.Left
+seedHeader.Parent = shopFrame
+
 -- Toggles (create these first so updateShopToggle can reference them)
 local autoBuyEggToggle = Instance.new("TextButton")
 autoBuyEggToggle.Name = "AutoBuyEggToggle"
 autoBuyEggToggle.Size = UDim2.new(1, -32, 0, 36)
+autoBuyEggToggle.Position = UDim2.new(0, 16, 0, 100)
 autoBuyEggToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
 autoBuyEggToggle.Text = "AUTO BUY EGG"
 autoBuyEggToggle.Font = Enum.Font.SourceSansBold
@@ -235,6 +270,7 @@ end)
 local autoBuySeedToggle = Instance.new("TextButton")
 autoBuySeedToggle.Name = "AutoBuySeedToggle"
 autoBuySeedToggle.Size = UDim2.new(1, -32, 0, 36)
+autoBuySeedToggle.Position = UDim2.new(0, 16, 0, 146)
 autoBuySeedToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
 autoBuySeedToggle.Text = "AUTO BUY SEED"
 autoBuySeedToggle.Font = Enum.Font.SourceSansBold
@@ -845,6 +881,7 @@ gearDropdownList.CanvasSize = UDim2.new(0, 0, 0, #gearOptions * 38)
 local autoBuyGearToggle = Instance.new("TextButton")
 autoBuyGearToggle.Name = "AutoBuyGearToggle"
 autoBuyGearToggle.Size = UDim2.new(1, -32, 0, 36)
+autoBuyGearToggle.Position = UDim2.new(0, 16, 0, 158)
 autoBuyGearToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
 autoBuyGearToggle.Text = "AUTO BUY GEAR"
 autoBuyGearToggle.Font = Enum.Font.SourceSansBold
