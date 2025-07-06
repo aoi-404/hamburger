@@ -210,10 +210,12 @@ shopScroll.ScrollBarThickness = 8
 shopScroll.Parent = shopFrame
 shopScroll.ZIndex = 21
 
--- Move all children of shopFrame (except ShopScroll) into ShopScroll
-for _, child in ipairs(shopFrame:GetChildren()) do
-    if child ~= shopScroll then
-        child.Parent = shopScroll
+-- Move all children of shopFrame (except ShopScroll) into ShopScroll (fix: do this after all children are created)
+local function moveShopChildrenToScroll()
+    for _, child in ipairs(shopFrame:GetChildren()) do
+        if child ~= shopScroll then
+            child.Parent = shopScroll
+        end
     end
 end
 
