@@ -3,6 +3,8 @@ GAG SCRIPT BY:BREAD
 Modern Sidebar GUI (Restarted)
 --]]
 
+print("[GAG] Script started")
+
 -- Services
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -17,6 +19,14 @@ screenGui.Name = "GAG_SidebarGUI"
 screenGui.ResetOnSpawn = false
 screenGui.IgnoreGuiInset = true
 screenGui.Parent = playerGui
+print("[GAG] ScreenGui parented to PlayerGui")
+
+local function safeFind(parent, child)
+    if parent then
+        return parent:FindFirstChild(child)
+    end
+    return nil
+end
 
 -- Sidebar Frame
 local sidebar = Instance.new("Frame")
@@ -117,7 +127,7 @@ for _, name in ipairs(tabNames) do
     frame.BackgroundTransparency = 1
     frame.Visible = (name == "EVENT")
     frame.Parent = contentFrame
-    frame.ZIndex = 5
+    frame.ZIndex = 11 -- Increased ZIndex for visibility
     tabContent[name] = frame
 end
 
@@ -134,6 +144,7 @@ eventHeader.TextColor3 = Color3.fromRGB(255,255,255)
 eventHeader.BorderSizePixel = 0
 eventHeader.TextXAlignment = Enum.TextXAlignment.Center
 eventHeader.Parent = eventFrame
+eventHeader.ZIndex = 12
 
 local autoSubmitToggle = Instance.new("TextButton")
 autoSubmitToggle.Name = "AutoSubmitToggle"
@@ -147,6 +158,7 @@ autoSubmitToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoSubmitToggle.BorderSizePixel = 0
 autoSubmitToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoSubmitToggle.Parent = eventFrame
+autoSubmitToggle.ZIndex = 12
 
 local check = Instance.new("TextLabel")
 check.Name = "Checkmark"
@@ -158,6 +170,7 @@ check.TextSize = 24
 check.TextColor3 = Color3.fromRGB(220, 220, 220)
 check.Text = ""
 check.Parent = autoSubmitToggle
+check.ZIndex = 13
 
 local autoSubmitState = false
 local function updateAutoSubmitToggle()
@@ -184,6 +197,7 @@ gearHeader.TextSize = 22
 gearHeader.TextColor3 = Color3.fromRGB(255,255,255)
 gearHeader.TextXAlignment = Enum.TextXAlignment.Left
 gearHeader.Parent = shopFrame
+gearHeader.ZIndex = 12
 
 local eggHeader = Instance.new("TextLabel")
 eggHeader.Size = UDim2.new(1, -40, 0, 32)
@@ -195,6 +209,7 @@ eggHeader.TextSize = 22
 eggHeader.TextColor3 = Color3.fromRGB(255,255,255)
 eggHeader.TextXAlignment = Enum.TextXAlignment.Left
 eggHeader.Parent = shopFrame
+eggHeader.ZIndex = 12
 
 local seedHeader = Instance.new("TextLabel")
 seedHeader.Size = UDim2.new(1, -40, 0, 32)
@@ -206,6 +221,7 @@ seedHeader.TextSize = 22
 seedHeader.TextColor3 = Color3.fromRGB(255,255,255)
 seedHeader.TextXAlignment = Enum.TextXAlignment.Left
 seedHeader.Parent = shopFrame
+seedHeader.ZIndex = 12
 
 -- Toggles (create these first so updateShopToggle can reference them)
 local autoBuyEggToggle = Instance.new("TextButton")
@@ -220,6 +236,7 @@ autoBuyEggToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuyEggToggle.BorderSizePixel = 0
 autoBuyEggToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuyEggToggle.Parent = shopFrame
+autoBuyEggToggle.ZIndex = 12
 
 local eggCheck = Instance.new("TextLabel")
 eggCheck.Name = "Checkmark"
@@ -231,6 +248,7 @@ eggCheck.TextSize = 24
 eggCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
 eggCheck.Text = ""
 eggCheck.Parent = autoBuyEggToggle
+eggCheck.ZIndex = 13
 
 local autoBuyEggState = false
 local autoBuyEggLoopRunning = false
@@ -279,6 +297,7 @@ autoBuySeedToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuySeedToggle.BorderSizePixel = 0
 autoBuySeedToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuySeedToggle.Parent = shopFrame
+autoBuySeedToggle.ZIndex = 12
 
 local seedCheck = Instance.new("TextLabel")
 seedCheck.Name = "Checkmark"
@@ -290,6 +309,7 @@ seedCheck.TextSize = 24
 seedCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
 seedCheck.Text = ""
 seedCheck.Parent = autoBuySeedToggle
+seedCheck.ZIndex = 13
 
 local autoBuySeedState = false
 local autoBuySeedLoopRunning = false
@@ -564,6 +584,7 @@ autoPlantToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoPlantToggle.BorderSizePixel = 0
 autoPlantToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoPlantToggle.Parent = farmFrame
+autoPlantToggle.ZIndex = 12
 
 local plantCheck = Instance.new("TextLabel")
 plantCheck.Name = "Checkmark"
@@ -575,6 +596,7 @@ plantCheck.TextSize = 24
 plantCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
 plantCheck.Text = ""
 plantCheck.Parent = autoPlantToggle
+plantCheck.ZIndex = 13
 
 local autoPlantState = false
 local function updateAutoPlantToggle()
@@ -600,6 +622,7 @@ autoHarvestToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoHarvestToggle.BorderSizePixel = 0
 autoHarvestToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoHarvestToggle.Parent = farmFrame
+autoHarvestToggle.ZIndex = 12
 
 local harvestCheck = Instance.new("TextLabel")
 harvestCheck.Name = "Checkmark"
@@ -611,6 +634,7 @@ harvestCheck.TextSize = 24
 harvestCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
 harvestCheck.Text = ""
 harvestCheck.Parent = autoHarvestToggle
+harvestCheck.ZIndex = 13
 
 local autoHarvestState = false
 local function updateAutoHarvestToggle()
@@ -636,6 +660,7 @@ autoSellToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoSellToggle.BorderSizePixel = 0
 autoSellToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoSellToggle.Parent = farmFrame
+autoSellToggle.ZIndex = 12
 
 local sellCheck = Instance.new("TextLabel")
 sellCheck.Name = "Checkmark"
@@ -647,6 +672,7 @@ sellCheck.TextSize = 24
 sellCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
 sellCheck.Text = ""
 sellCheck.Parent = autoSellToggle
+sellCheck.ZIndex = 13
 
 local autoSellState = false
 local function updateAutoSellToggle()
@@ -660,9 +686,15 @@ autoSellToggle.MouseButton1Click:Connect(function()
 end)
 
 -- Automation Remotes for FARM
-local plantRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("Plant_RE")
-local harvestRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("HarvestRemote")
-local sellRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("Sell_Inventory")
+local gameEvents = ReplicatedStorage:FindFirstChild("GameEvents")
+if not gameEvents then
+    warn("[GAG] GameEvents folder not found in ReplicatedStorage!")
+else
+    print("[GAG] GameEvents found")
+end
+local plantRemote = safeFind(gameEvents, "Plant_RE")
+local harvestRemote = safeFind(gameEvents, "HarvestRemote")
+local sellRemote = safeFind(gameEvents, "Sell_Inventory")
 
 -- Auto Plant Loop
 local autoPlantLoopRunning = false
@@ -890,6 +922,7 @@ autoBuyGearToggle.TextColor3 = Color3.fromRGB(255,255,255)
 autoBuyGearToggle.BorderSizePixel = 0
 autoBuyGearToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuyGearToggle.Parent = shopFrame
+autoBuyGearToggle.ZIndex = 12
 
 local gearCheck = Instance.new("TextLabel")
 gearCheck.Name = "Checkmark"
@@ -901,6 +934,7 @@ gearCheck.TextSize = 24
 gearCheck.TextColor3 = Color3.fromRGB(220, 220, 220)
 gearCheck.Text = ""
 gearCheck.Parent = autoBuyGearToggle
+gearCheck.ZIndex = 13
 
 local autoBuyGearState = false
 local function updateAutoBuyGearToggle()
@@ -981,8 +1015,9 @@ UserInputService.InputBegan:Connect(function(input, processed)
 end)
 
 -- Automation Remotes
-local buyEggRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuyPetEgg")
-local buySeedRemote = ReplicatedStorage:FindFirstChild("GameEvents"):FindFirstChild("BuySeedStock")
+local buyEggRemote = safeFind(gameEvents, "BuyPetEgg")
+local buySeedRemote = safeFind(gameEvents, "BuySeedStock")
+local buyGearRemote = safeFind(gameEvents, "BuyGearStock")
 
 -- Helper: Check if an egg/seed is in stock (stub, should be replaced with real stock check if available)
 local function isEggInStock(eggName)
@@ -1087,3 +1122,5 @@ UserInputService.InputBegan:Connect(function(input, processed)
         end
     end
 end)
+
+print("[GAG] Script finished loading UI")
