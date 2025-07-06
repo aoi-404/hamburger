@@ -200,6 +200,12 @@ local shopFrame = tabContent["SHOP"]
 
 -- Y position tracker for vertical stacking
 local y = 20
+local dropdownStates = {Gear = false, Egg = false, Seed = false}
+local function closeAllDropdowns(except)
+    if except ~= "Gear" then gearDropdownList.Visible = false dropdownStates.Gear = false end
+    if except ~= "Egg" then eggDropdownList.Visible = false dropdownStates.Egg = false end
+    if except ~= "Seed" then seedDropdownList.Visible = false dropdownStates.Seed = false end
+end
 
 -- GEAR SECTION
 local gearHeader = Instance.new("TextLabel")
@@ -240,10 +246,12 @@ gearDropdownList.Visible = false
 gearDropdownList.Parent = shopFrame
 gearDropdownList.ZIndex = 23
 
+y = y + 0 -- Will be updated dynamically when dropdown is open
+
 local autoBuyGearToggle = Instance.new("TextButton")
 autoBuyGearToggle.Name = "AutoBuyGearToggle"
 autoBuyGearToggle.Size = UDim2.new(1, -40, 0, 36)
-autoBuyGearToggle.Position = UDim2.new(0, 20, 0, y + 0)
+autoBuyGearToggle.Position = UDim2.new(0, 20, 0, y)
 autoBuyGearToggle.BackgroundColor3 = Color3.fromRGB(60, 90, 130)
 autoBuyGearToggle.Text = "AUTO BUY GEAR"
 autoBuyGearToggle.Font = Enum.Font.SourceSansBold
@@ -253,43 +261,40 @@ autoBuyGearToggle.BorderSizePixel = 0
 autoBuyGearToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuyGearToggle.Parent = shopFrame
 autoBuyGearToggle.ZIndex = 22
+y = y + 36 + 12
 
--- GEAR LIST OPTIONS
-local gearOptions = {
-    "Watering Can", "Trowel", "Recall Wrench", "Basic Sprinkler", "Advanced Sprinkler", "Godly Sprinkler", "Magnifying Glass", "Tanning Mirror", "Master Sprinkler", "Cleaning Spray", "Favourite Tool", "Harvest Tool", "Friendship Pot"
-}
-local selectedGear = {}
-local function updateGearDropdownText()
-    if #selectedGear == 0 then
-        gearDropdownBtn.Text = "BUY GEAR:"
+-- GEAR DROPDOWN BUTTON EVENT
+gearDropdownBtn.MouseButton1Click:Connect(function()
+    local open = not gearDropdownList.Visible
+    closeAllDropdowns(open and "Gear" or nil)
+    gearDropdownList.Visible = open
+    dropdownStates.Gear = open
+    if open then
+        gearDropdownList.Size = UDim2.new(1, -40, 0, #gearOptions * 38)
+        -- Move elements below
+        autoBuyGearToggle.Position = UDim2.new(0, 20, 0, gearDropdownList.Position.Y.Offset + gearDropdownList.Size.Y.Offset + 6)
+        eggHeader.Position = UDim2.new(0, 20, 0, autoBuyGearToggle.Position.Y.Offset + autoBuyGearToggle.Size.Y.Offset + 12)
+        eggDropdownBtn.Position = UDim2.new(0, 20, 0, eggHeader.Position.Y.Offset + eggHeader.Size.Y.Offset + 6)
+        eggDropdownList.Position = UDim2.new(0, 20, 0, eggDropdownBtn.Position.Y.Offset + eggDropdownBtn.Size.Y.Offset + 6)
+        autoBuyEggToggle.Position = UDim2.new(0, 20, 0, eggDropdownList.Position.Y.Offset + eggDropdownList.Size.Y.Offset + 6)
+        seedHeader.Position = UDim2.new(0, 20, 0, autoBuyEggToggle.Position.Y.Offset + autoBuyEggToggle.Size.Y.Offset + 12)
+        seedDropdownBtn.Position = UDim2.new(0, 20, 0, seedHeader.Position.Y.Offset + seedHeader.Size.Y.Offset + 6)
+        seedDropdownList.Position = UDim2.new(0, 20, 0, seedDropdownBtn.Position.Y.Offset + seedDropdownBtn.Size.Y.Offset + 6)
+        autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + seedDropdownList.Size.Y.Offset + 6)
     else
-        gearDropdownBtn.Text = "BUY GEAR: " .. table.concat(selectedGear, ", ")
+        gearDropdownList.Size = UDim2.new(1, -40, 0, 0)
+        -- Reset positions
+        autoBuyGearToggle.Position = UDim2.new(0, 20, 0, gearDropdownList.Position.Y.Offset + 0)
+        eggHeader.Position = UDim2.new(0, 20, 0, autoBuyGearToggle.Position.Y.Offset + autoBuyGearToggle.Size.Y.Offset + 12)
+        eggDropdownBtn.Position = UDim2.new(0, 20, 0, eggHeader.Position.Y.Offset + eggHeader.Size.Y.Offset + 6)
+        eggDropdownList.Position = UDim2.new(0, 20, 0, eggDropdownBtn.Position.Y.Offset + eggDropdownBtn.Size.Y.Offset + 6)
+        autoBuyEggToggle.Position = UDim2.new(0, 20, 0, eggDropdownList.Position.Y.Offset + eggDropdownList.Size.Y.Offset + 6)
+        seedHeader.Position = UDim2.new(0, 20, 0, autoBuyEggToggle.Position.Y.Offset + autoBuyEggToggle.Size.Y.Offset + 12)
+        seedDropdownBtn.Position = UDim2.new(0, 20, 0, seedHeader.Position.Y.Offset + seedHeader.Size.Y.Offset + 6)
+        seedDropdownList.Position = UDim2.new(0, 20, 0, seedDropdownBtn.Position.Y.Offset + seedDropdownBtn.Size.Y.Offset + 6)
+        autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + seedDropdownList.Size.Y.Offset + 6)
     end
-end
-for i, name in ipairs(gearOptions) do
-    local opt = Instance.new("TextButton")
-    opt.Size = UDim2.new(1, 0, 0, 38)
-    opt.Position = UDim2.new(0, 0, 0, (i-1)*38)
-    opt.BackgroundColor3 = Color3.fromRGB(100, 170, 220)
-    opt.Text = name
-    opt.Font = Enum.Font.SourceSans
-    opt.TextSize = 20
-    opt.TextColor3 = Color3.fromRGB(255,255,255)
-    opt.BorderSizePixel = 0
-    opt.Parent = gearDropdownList
-    opt.ZIndex = 14
-    opt.MouseButton1Click:Connect(function()
-        local found = false
-        for j, v in ipairs(selectedGear) do
-            if v == name then table.remove(selectedGear, j) found = true break end
-        end
-        if not found then table.insert(selectedGear, name) end
-        updateGearDropdownText()
-        opt.BackgroundColor3 = found and Color3.fromRGB(100, 170, 220) or Color3.fromRGB(60, 200, 120)
-    end)
-end
-updateGearDropdownText()
-gearDropdownList.CanvasSize = UDim2.new(0, 0, 0, #gearOptions * 38)
+end)
 
 -- EGG SECTION
 local eggHeader = Instance.new("TextLabel")
@@ -330,6 +335,8 @@ eggDropdownList.Visible = false
 eggDropdownList.Parent = shopFrame
 eggDropdownList.ZIndex = 23
 
+y = y + 0 -- Will be updated dynamically when dropdown is open
+
 local autoBuyEggToggle = Instance.new("TextButton")
 autoBuyEggToggle.Name = "AutoBuyEggToggle"
 autoBuyEggToggle.Size = UDim2.new(1, -40, 0, 36)
@@ -343,43 +350,30 @@ autoBuyEggToggle.BorderSizePixel = 0
 autoBuyEggToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuyEggToggle.Parent = shopFrame
 autoBuyEggToggle.ZIndex = 22
+y = y + 36 + 12
 
--- EGG LIST OPTIONS
-local eggOptions = {
-    "Basic Egg", "Advanced Egg", "Godly Egg", "Mystery Egg", "Event Egg"
-}
-local selectedEgg = {}
-local function updateEggDropdownText()
-    if #selectedEgg == 0 then
-        eggDropdownBtn.Text = "BUY EGG:"
+-- EGG DROPDOWN BUTTON EVENT
+eggDropdownBtn.MouseButton1Click:Connect(function()
+    local open = not eggDropdownList.Visible
+    closeAllDropdowns(open and "Egg" or nil)
+    eggDropdownList.Visible = open
+    dropdownStates.Egg = open
+    if open then
+        eggDropdownList.Size = UDim2.new(1, -40, 0, #eggOptions * 38)
+        autoBuyEggToggle.Position = UDim2.new(0, 20, 0, eggDropdownList.Position.Y.Offset + eggDropdownList.Size.Y.Offset + 6)
+        seedHeader.Position = UDim2.new(0, 20, 0, autoBuyEggToggle.Position.Y.Offset + autoBuyEggToggle.Size.Y.Offset + 12)
+        seedDropdownBtn.Position = UDim2.new(0, 20, 0, seedHeader.Position.Y.Offset + seedHeader.Size.Y.Offset + 6)
+        seedDropdownList.Position = UDim2.new(0, 20, 0, seedDropdownBtn.Position.Y.Offset + seedDropdownBtn.Size.Y.Offset + 6)
+        autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + seedDropdownList.Size.Y.Offset + 6)
     else
-        eggDropdownBtn.Text = "BUY EGG: " .. table.concat(selectedEgg, ", ")
+        eggDropdownList.Size = UDim2.new(1, -40, 0, 0)
+        autoBuyEggToggle.Position = UDim2.new(0, 20, 0, eggDropdownList.Position.Y.Offset + 0)
+        seedHeader.Position = UDim2.new(0, 20, 0, autoBuyEggToggle.Position.Y.Offset + autoBuyEggToggle.Size.Y.Offset + 12)
+        seedDropdownBtn.Position = UDim2.new(0, 20, 0, seedHeader.Position.Y.Offset + seedHeader.Size.Y.Offset + 6)
+        seedDropdownList.Position = UDim2.new(0, 20, 0, seedDropdownBtn.Position.Y.Offset + seedDropdownBtn.Size.Y.Offset + 6)
+        autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + seedDropdownList.Size.Y.Offset + 6)
     end
-end
-for i, name in ipairs(eggOptions) do
-    local opt = Instance.new("TextButton")
-    opt.Size = UDim2.new(1, 0, 0, 38)
-    opt.Position = UDim2.new(0, 0, 0, (i-1)*38)
-    opt.BackgroundColor3 = Color3.fromRGB(100, 170, 220)
-    opt.Text = name
-    opt.Font = Enum.Font.SourceSans
-    opt.TextSize = 20
-    opt.TextColor3 = Color3.fromRGB(255,255,255)
-    opt.BorderSizePixel = 0
-    opt.Parent = eggDropdownList
-    opt.ZIndex = 14
-    opt.MouseButton1Click:Connect(function()
-        local found = false
-        for j, v in ipairs(selectedEgg) do
-            if v == name then table.remove(selectedEgg, j) found = true break end
-        end
-        if not found then table.insert(selectedEgg, name) end
-        updateEggDropdownText()
-        opt.BackgroundColor3 = found and Color3.fromRGB(100, 170, 220) or Color3.fromRGB(60, 200, 120)
-    end)
-end
-updateEggDropdownText()
-eggDropdownList.CanvasSize = UDim2.new(0, 0, 0, #eggOptions * 38)
+end)
 
 -- SEED SECTION
 local seedHeader = Instance.new("TextLabel")
@@ -420,6 +414,8 @@ seedDropdownList.Visible = false
 seedDropdownList.Parent = shopFrame
 seedDropdownList.ZIndex = 23
 
+y = y + 0 -- Will be updated dynamically when dropdown is open
+
 local autoBuySeedToggle = Instance.new("TextButton")
 autoBuySeedToggle.Name = "AutoBuySeedToggle"
 autoBuySeedToggle.Size = UDim2.new(1, -40, 0, 36)
@@ -434,71 +430,22 @@ autoBuySeedToggle.TextXAlignment = Enum.TextXAlignment.Left
 autoBuySeedToggle.Parent = shopFrame
 autoBuySeedToggle.ZIndex = 22
 
--- SEED LIST OPTIONS
-local seedOptions = {
-    "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Watermelon", "Raffleisa", "Green Apple", "Avocado", "Banana", "Pineapple", "Kiwi", "Bell Pepper", "Prickly Pear", "Loquat", "Feijoa", "Pitcher Plant", "Sugar Apple", "Burning Bud"
-}
-local seedDetails = {
-    ["Carrot"] = "Single | 10 | Common",
-    ["Strawberry"] = "Multiple | 50 | Common",
-    ["Blueberry"] = "Multiple | 400 | Uncommon",
-    ["Tomato"] = "Multiple | 800 | Rare",
-    ["Cauliflower"] = "Multiple | 1,300 | Rare",
-    ["Watermelon"] = "Single | 2,500 | Legendary",
-    ["Raffleisa"] = "Single | 3,200 | Legendary",
-    ["Green Apple"] = "Multiple | 3,500 | Legendary",
-    ["Avocado"] = "Multiple | 5,000 | Legendary",
-    ["Banana"] = "Multiple | 7,000 | Legendary",
-    ["Pineapple"] = "Multiple | 7,500 | Mythical",
-    ["Kiwi"] = "Multiple | 10,000 | Mythical",
-    ["Bell Pepper"] = "Multiple | 55,000 | Mythical",
-    ["Prickly Pear"] = "Multiple | 555,000 | Mythical",
-    ["Loquat"] = "Multiple | 900,000 | Divine",
-    ["Feijoa"] = "Multiple | 900,000 | Divine",
-    ["Pitcher Plant"] = "Multiple | 7,500,000 | Divine",
-    ["Sugar Apple"] = "Multiple | 25,000,000 | Prismatic",
-    ["Burning Bud"] = "Multiple | 50,000,000 | Prismatic"
-}
-local selectedSeed = {}
-local function updateSeedDropdownText()
-    if #selectedSeed == 0 then
-        seedDropdownBtn.Text = "BUY SEEDS:"
+y = y + 36 + 12
+
+-- SEED DROPDOWN BUTTON EVENT
+seedDropdownBtn.MouseButton1Click:Connect(function()
+    local open = not seedDropdownList.Visible
+    closeAllDropdowns(open and "Seed" or nil)
+    seedDropdownList.Visible = open
+    dropdownStates.Seed = open
+    if open then
+        seedDropdownList.Size = UDim2.new(1, -40, 0, #seedOptions * 38)
+        autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + seedDropdownList.Size.Y.Offset + 6)
     else
-        seedDropdownBtn.Text = "BUY SEEDS: " .. table.concat(selectedSeed, ", ")
+        seedDropdownList.Size = UDim2.new(1, -40, 0, 0)
+        autoBuySeedToggle.Position = UDim2.new(0, 20, 0, seedDropdownList.Position.Y.Offset + 0)
     end
-end
-for i, name in ipairs(seedOptions) do
-    local opt = Instance.new("TextButton")
-    opt.Size = UDim2.new(1, 0, 0, 38)
-    opt.Position = UDim2.new(0, 0, 0, (i-1)*38)
-    opt.BackgroundColor3 = Color3.fromRGB(100, 170, 220)
-    opt.Text = name
-    opt.Font = Enum.Font.SourceSans
-    opt.TextSize = 20
-    opt.TextColor3 = Color3.fromRGB(255,255,255)
-    opt.BorderSizePixel = 0
-    opt.Parent = seedDropdownList
-    opt.ZIndex = 14
-    opt.MouseEnter:Connect(function()
-        opt.Text = name .. "\n" .. (seedDetails[name] or "")
-        opt.TextWrapped = true
-    end)
-    opt.MouseLeave:Connect(function()
-        opt.Text = name
-        opt.TextWrapped = false
-    end)
-    opt.MouseButton1Click:Connect(function()
-        local found = false
-        for j, v in ipairs(selectedSeed) do
-            if v == name then table.remove(selectedSeed, j) found = true break end
-        end
-        if not found then table.insert(selectedSeed, name) end
-        updateSeedDropdownText()
-        opt.BackgroundColor3 = found and Color3.fromRGB(100, 170, 220) or Color3.fromRGB(60, 200, 120)
-    end)
-end
-updateSeedDropdownText()
-seedDropdownList.CanvasSize = UDim2.new(0, 0, 0, #seedOptions * 38)
+end)
 
 -- Set all tab content children ZIndex to 22 (above contentFrame)
 for _, frame in pairs(tabContent) do
