@@ -1,4 +1,3 @@
-
 --[[
 GAG SCRIPT BY:BREAD
 Modern Sidebar GUI (Restarted)
@@ -78,7 +77,7 @@ local tabButtons = {}
 for i, name in ipairs(tabNames) do
     local tabBtn = Instance.new("TextButton")
     tabBtn.Name = name .. "TabBtn"
-    tabBtn.Size = UDim2.new(0, 120, 0, 54) -- Increased width and height
+    tabBtn.Size = UDim2.new(0, 120, 0, 54)
     tabBtn.Position = UDim2.new(0, 0, 0, 44 + (i-1)*54)
     tabBtn.BackgroundColor3 = i == 1 and Color3.fromRGB(220, 160, 80) or Color3.fromRGB(80, 90, 110)
     tabBtn.Text = name
@@ -87,6 +86,7 @@ for i, name in ipairs(tabNames) do
     tabBtn.TextColor3 = Color3.fromRGB(40, 40, 40)
     tabBtn.BorderSizePixel = 0
     tabBtn.Parent = sidebar
+    tabBtn.ZIndex = 10 -- Always on top
     tabButtons[name] = tabBtn
 end
 
@@ -98,7 +98,7 @@ navLine.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 navLine.BorderSizePixel = 0
 navLine.Parent = sidebar
 
--- Main Content Frame
+-- Main Content Frame (ensure correct position and ZIndex)
 local contentFrame = Instance.new("Frame")
 contentFrame.Name = "ContentFrame"
 contentFrame.Size = UDim2.new(1, -124, 1, -44)
@@ -106,8 +106,9 @@ contentFrame.Position = UDim2.new(0, 124, 0, 44)
 contentFrame.BackgroundColor3 = Color3.fromRGB(120, 130, 150)
 contentFrame.BorderSizePixel = 0
 contentFrame.Parent = sidebar
+contentFrame.ZIndex = 5
 
--- Tab Content
+-- Tab Content (ensure ZIndex and parent)
 local tabContent = {}
 for _, name in ipairs(tabNames) do
     local frame = Instance.new("Frame")
@@ -116,6 +117,7 @@ for _, name in ipairs(tabNames) do
     frame.BackgroundTransparency = 1
     frame.Visible = (name == "EVENT")
     frame.Parent = contentFrame
+    frame.ZIndex = 5
     tabContent[name] = frame
 end
 
